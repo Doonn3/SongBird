@@ -18,7 +18,7 @@ class State<T> {
   }
 
   private notifyObservers() {
-    for (let observer of this.observers) {
+    for (const observer of this.observers) {
       observer(this.value);
     }
   }

@@ -46,7 +46,7 @@ export class HistoryRouter {
 
   public Init() {
     this.onURLChange();
-    window.addEventListener("popstate", (event) => {
+    window.addEventListener("popstate", () => {
       this.onURLChange();
     });
   }

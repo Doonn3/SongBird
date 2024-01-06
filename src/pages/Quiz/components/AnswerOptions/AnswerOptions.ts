@@ -1,6 +1,3 @@
-import AudioError from "@/shared/assets/audio/error.mp3";
-import AudioWIn from "@/shared/assets/audio/win.mp3";
-
 import "./style.scss";
 
 interface PropstType {

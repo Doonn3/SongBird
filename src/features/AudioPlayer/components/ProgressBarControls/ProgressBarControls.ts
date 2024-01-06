@@ -121,7 +121,7 @@ export class ProgressBarControls {
   };
 
   private updateProgressBar() {
-    let percentage =
+    const percentage =
       (this.model.CurrTime.Value / this.model.Duration.Value) * 100;
     console.log(percentage);
     this.fill.style.width = `${percentage}%`;
