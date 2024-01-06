@@ -1,11 +1,13 @@
 import { defineConfig } from "vite";
 import svgLoader from "vite-svg-loader";
+import eslintPlugin from 'vite-plugin-eslint'
 
 export default defineConfig({
   plugins: [
     svgLoader({
       defaultImport: "raw", // or 'url'
     }),
+    eslintPlugin()
   ],
   resolve: {
     alias: {
