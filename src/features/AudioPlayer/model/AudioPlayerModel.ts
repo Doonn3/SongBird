@@ -3,12 +3,34 @@ class AudioPlayerModel {
   private durationCallback: (duration: number) => void = () => {};
   private currTimeCallback: (currentTime: number) => void = () => {};
   private endedCallback: () => void = () => {};
-  public SetAudio(_audio: string) {
-    this.instanceAudio.src = _audio;
 
+  private mount() {
     this.instanceAudio.addEventListener("loadedmetadata", this.eventDuration);
     this.instanceAudio.addEventListener("timeupdate", this.eventCurrentTime);
     this.instanceAudio.addEventListener("ended", this.eventEnded);
+  }
+
+  private unMount() {
+    this.Stop();
+    this.instanceAudio.src = "";
+    this.instanceAudio.removeEventListener(
+      "loadedmetadata",
+      this.eventDuration
+    );
+    this.instanceAudio.removeEventListener("timeupdate", this.eventCurrentTime);
+    this.instanceAudio.removeEventListener("ended", this.eventEnded);
+  }
+
+  public Destroy() {
+    this.unMount();
+  }
+
+  public SetAudio(_audio: string) {
+    this.unMount();
+
+    this.instanceAudio.src = _audio;
+
+    this.mount();
   }
 
   public Play() {
@@ -26,6 +48,14 @@ class AudioPlayerModel {
 
   public SetTime(second: number) {
     this.instanceAudio.currentTime = second;
+  }
+
+  public SoundMute(flag: boolean) {
+    this.instanceAudio.muted = flag;
+  }
+
+  public SoundPower(power: number) {
+    this.instanceAudio.volume = power;
   }
 
   public onDurationChange(callback: (duration: number) => void) {

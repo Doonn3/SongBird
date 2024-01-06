@@ -2,103 +2,140 @@ import "./style.scss";
 import SoundMuteIcon from "../../assets/sound-mute.svg";
 import SoundMinIcon from "../../assets/sound-min.svg";
 import SoundMaxIcon from "../../assets/sound-max.svg";
+import { utils } from "@/shared/Utils";
+import AudioPlayerModel from "../../model/AudioPlayerModel";
 
-export function SoundControls() {
-  let root: HTMLElement | null = null;
-  let iconControl: HTMLElement | null = null;
+class SoundModel {
+  private audioPlayerModel: AudioPlayerModel;
 
-  let track: HTMLElement | null = null;
-  let fill: HTMLElement | null = null;
+  private currentStatusIcon = SoundMinIcon;
 
-  let strenthFill = 100;
-
-  const status = {
+  private statusMap = {
     mute: SoundMuteIcon,
     min: SoundMinIcon,
     max: SoundMaxIcon,
   };
 
-  let isMute = false;
+  private readonly maxPowerSound = 100;
+  private readonly minPowerSound = 0;
+  private currentPowerSound = 50;
+  private tempPowerSound = this.currentPowerSound;
 
-  const onMount = (parent?: HTMLElement) => {
-    if (parent === undefined) {
-      throw new Error("Not Mount, SoundControls");
-    }
+  private isMute = false;
 
-    root = parent.querySelector(".sound-controls");
+  public get CurrentStatusIcon() {
+    return this.currentStatusIcon;
+  }
 
-    iconControl = root!.querySelector(".sound-controls__icons");
+  public get CurrentPowerSound() {
+    return this.currentPowerSound;
+  }
 
-    track = root!.querySelector(".sound-controls__progress-track");
+  constructor(audioPlayerModel: AudioPlayerModel) {
+    this.audioPlayerModel = audioPlayerModel;
+    this.audioPlayerModel.SoundPower(this.currentPowerSound / 100);
+  }
 
-    fill = root!.querySelector(".sound-controls__progress-fill");
+  public changeIcon() {
+    this.isMute = !this.isMute;
 
-    iconControl?.addEventListener("click", onChangeIconControls);
-    track?.addEventListener("click", onChangeFill);
-  };
+    this.audioPlayerModel.SoundMute(this.isMute);
 
-  const onChangeIconControls = () => {
-    isMute = !isMute;
-
-    iconControl!.innerHTML = `${isMute ? status.mute : status.max}`;
-
-    if (isMute) {
-      fillChange(0);
+    if (this.isMute) {
+      this.tempPowerSound = this.currentPowerSound;
+      this.currentPowerSound = this.minPowerSound;
+      this.currentStatusIcon = this.statusMap.mute;
     } else {
-      fillChange(100);
+      this.currentPowerSound = this.tempPowerSound;
+      this.currentStatusIcon = this.statusMap.min;
     }
+
+    return this.currentStatusIcon;
+  }
+
+  public ChangeSound(offsetX: number, width: number) {
+    let calc = (offsetX / width) * 100;
+
+    if (calc >= 95) calc = this.maxPowerSound;
+    if (calc <= 5) calc = this.minPowerSound;
+
+    this.changeSoundIcon(calc);
+
+    this.currentPowerSound = calc;
+    this.audioPlayerModel.SoundPower(calc / 100);
+
+    return calc;
+  }
+
+  private changeSoundIcon(value: number) {
+    if (value >= 95) {
+      this.currentStatusIcon = this.statusMap.max;
+    } else if (value <= 5) {
+      this.currentStatusIcon = this.statusMap.mute;
+    } else {
+      this.currentStatusIcon = this.statusMap.min;
+    }
+  }
+}
+
+export class SoundControls {
+  private root: HTMLElement;
+  private iconControl: HTMLElement;
+  private track: HTMLElement;
+  private fill: HTMLElement;
+
+  private model: SoundModel;
+
+  constructor(audioPlayerModel: AudioPlayerModel) {
+    this.model = new SoundModel(audioPlayerModel);
+
+    this.root = utils.createHTMLElement("div", "sound-controls");
+
+    this.iconControl = utils.createHTMLElement("div", "sound-controls__icons");
+    this.iconControl.innerHTML = this.model.CurrentStatusIcon;
+
+    this.track = utils.createHTMLElement(
+      "div",
+      "sound-controls__progress-track"
+    );
+
+    this.fill = utils.createHTMLElement(
+      "span",
+      "sound-controls__progress-fill"
+    );
+
+    this.fill.style.width = `${this.model.CurrentPowerSound}%`;
+
+    this.track.append(this.fill);
+
+    this.root.append(this.iconControl, this.track);
+  }
+
+  public OnMount() {
+    this.iconControl.addEventListener("click", this.onChangeIconControls);
+    this.track.addEventListener("click", this.onChangeSound);
+  }
+
+  public OnUnMount() {
+    this.iconControl.removeEventListener("click", this.onChangeIconControls);
+    this.track.removeEventListener("click", this.onChangeSound);
+  }
+
+  public Render() {
+    return this.root;
+  }
+
+  private onChangeIconControls = () => {
+    const result = this.model.changeIcon();
+    this.iconControl.innerHTML = result;
+    this.fill.style.width = `${this.model.CurrentPowerSound}%`;
   };
 
-  const onChangeFill = (event: MouseEvent) => {
+  private onChangeSound = (event: MouseEvent) => {
     const offsetX = event.offsetX;
-    const trackWidth = track!.getBoundingClientRect().width;
-
-    let calc = (offsetX / trackWidth) * 100;
-
-    if (calc >= 95) calc = 100;
-    if (calc <= 5) calc = 0;
-    fillChange(calc);
-  };
-
-  const fillChange = (val: number) => {
-    fill!.style.width = `${val}%`;
-
-    changeIcon(val);
-  };
-
-  const changeIcon = (val: number) => {
-    let icon = SoundMaxIcon;
-    if (val > 50) {
-      icon = SoundMaxIcon;
-    }
-
-    if (val < 20) {
-      icon = SoundMinIcon;
-    }
-
-    if (val <= 0) {
-      icon = SoundMuteIcon;
-    }
-
-    iconControl!.innerHTML = `${icon}`;
-  };
-
-  const render = () => {
-    return `
-    <div class="sound-controls">
-        <div class="sound-controls__icons">
-            ${isMute ? status.mute : status.max}
-        </div>
-
-        <div class="sound-controls__progress-track">
-            <span class="sound-controls__progress-fill"></span>
-        </div>
-    </div>
-    `;
-  };
-
-  return {
-    render,
-    onMount,
+    const trackWidth = this.track.getBoundingClientRect().width;
+    const result = this.model.ChangeSound(offsetX, trackWidth);
+    this.fill.style.width = `${result}%`;
+    this.iconControl.innerHTML = this.model.CurrentStatusIcon;
   };
 }

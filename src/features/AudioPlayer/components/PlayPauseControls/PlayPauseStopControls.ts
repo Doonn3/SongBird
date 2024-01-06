@@ -1,7 +1,8 @@
-import "./style.scss";
 import PlayIcon from "../../assets/play.svg";
 import PauseIcon from "../../assets/pause.svg";
 import StopIcon from "../../assets/stop.svg";
+
+import "./style.scss";
 
 interface IControl {
   onPlay?: () => void;
@@ -66,6 +67,13 @@ class PlayPauseStopControls {
   public Stop() {
     this.isPlay = false;
     this.playPause.innerHTML = `${this.isPlay ? PauseIcon : PlayIcon}`; // перерендериваем элемент после изменения состояния
+  }
+
+  public Play() {
+    this.isPlay = true;
+    if (this.isPlay) {
+      this.playPause.innerHTML = `${this.isPlay ? PauseIcon : PlayIcon}`; // перерендериваем элемент после изменения состояния
+    }
   }
 
   public Render() {

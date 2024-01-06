@@ -2,11 +2,10 @@ import AudioPlayerModel from "../model/AudioPlayerModel";
 import PlayPauseStopControls from "../components/PlayPauseControls/PlayPauseStopControls";
 import { ProgressBarControls } from "../components/ProgressBarControls/ProgressBarControls";
 
-import "./style.scss";
+import { SoundControls } from "../components/SoundControls/SoundControls";
+import { utils } from "@/shared/Utils";
 
-type PropsType = {
-  audioSrc: string;
-};
+import "./style.scss";
 
 class AudioPlayer {
   private root: HTMLElement;
@@ -17,10 +16,10 @@ class AudioPlayer {
 
   private progressBarControls: ProgressBarControls;
 
-  constructor(_props?: PropsType) {
-    if (_props) {
-      this.model.SetAudio(_props.audioSrc);
-    }
+  private soundControls: SoundControls;
+
+  constructor() {
+    this.soundControls = new SoundControls(this.model);
 
     this.playPauseStopControls = new PlayPauseStopControls({
       onPlay: this.onPlay,
@@ -39,12 +38,31 @@ class AudioPlayer {
     this.root = document.createElement("div");
     this.root.classList.add("audio-player");
 
-    this.root.append(this.playPauseStopControls.Render());
-    this.root.append(this.progressBarControls.Render());
+    const div = utils.createHTMLElement("div", "audio-player__controls");
+    div.append(
+      this.playPauseStopControls.Render(),
+      this.soundControls.Render()
+    );
+
+    this.root.append(div, this.progressBarControls.Render());
+  }
+
+  public OnMount() {
+    this.soundControls.OnMount();
+  }
+
+  public OnUnMount() {
+    this.model.Destroy();
+    this.soundControls.OnUnMount();
   }
 
   public SetAudioSrc(audioSrc: string) {
     this.model.SetAudio(audioSrc);
+  }
+
+  public Play() {
+    this.onPlay();
+    this.playPauseStopControls.Play();
   }
 
   private onPlay = () => {
@@ -57,6 +75,7 @@ class AudioPlayer {
 
   private onStop = () => {
     this.model.Stop();
+    this.playPauseStopControls.Stop();
   };
 
   public OnReset() {
@@ -80,11 +99,6 @@ class AudioPlayer {
   };
 
   public Render = () => {
-    // this.root = document.createElement("div");
-    // root.classList.add("audio-player");
-    // root.append(playPauseStopControls.render());
-    // root.insertAdjacentHTML("beforeend", soundControls.render());
-    // root.append(progressBarControls.Render());
     return this.root;
   };
 }
