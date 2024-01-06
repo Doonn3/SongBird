@@ -58,11 +58,11 @@ class ModalDialog {
     this.root.append(content);
   }
 
-  private onMount() {
+  public OnMount() {
     this.root.addEventListener("click", this.onClose);
   }
 
-  private OnUnmount() {
+  public OnUnmount() {
     this.root.removeEventListener("click", this.onClose);
   }
 
@@ -94,7 +94,7 @@ class ModalDialog {
   }
 
   public Render() {
-    this.onMount();
+    this.OnMount();
     return this.root;
   }
 }
