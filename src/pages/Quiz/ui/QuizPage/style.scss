@@ -1,0 +1,13 @@
+.quiz {
+  display: grid;
+
+  gap: 20px;
+
+  padding: 5px 50px;
+
+  &__middle {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}

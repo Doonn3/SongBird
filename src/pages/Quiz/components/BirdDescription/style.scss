@@ -1,0 +1,28 @@
+.bird-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+
+  background-color: rgb(48, 48, 48);
+
+  border-radius: 5px;
+
+  &__container {
+    display: flex;
+    gap: 20px;
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  &__img {
+    width: 200px;
+    height: 160px;
+    border-radius: 5px;
+  }
+}

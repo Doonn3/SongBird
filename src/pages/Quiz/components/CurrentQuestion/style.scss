@@ -1,0 +1,30 @@
+.current-question {
+  display: flex;
+  flex-direction: row;
+
+  width: 100%;
+  height: 200px;
+
+  padding: 1rem;
+
+  background-color: rgb(48, 48, 48);
+
+  border-radius: 5px;
+
+  & > img {
+    border-radius: 5px;
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    width: inherit;
+    padding: 0 30px;
+    & > p {
+      height: 100px;
+      margin: 0;
+      margin-bottom: 10px;
+      border-bottom: 2px solid rgb(85, 85, 85);
+    }
+  }
+}
