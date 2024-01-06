@@ -37,8 +37,9 @@ export class BirdsStore extends EventSystem<Type> {
   }
 
   public Reset() {
-    this.model.ScoreModel.ResetMaxPointsPerLevel();
+    this.model.ScoreModel.ResetLevelScore();
     this.model.LevelModel.Reset();
+    this.Emit("event-get-score", this.model.ScoreModel.CurrentScore);
   }
 
   public NextLevel() {

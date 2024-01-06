@@ -1,4 +1,4 @@
-import { BaseComponent, RouterLink } from "Core";
+import { BaseComponent, useRouter } from "Core";
 import { utils } from "@/shared/Utils";
 
 import { BirdsStore } from "@/entities/Birds";
@@ -27,10 +27,11 @@ class ResultPage extends BaseComponent {
 
     this.text = utils.createHTMLElement("p");
 
-    this.btn = RouterLink("quiz", {
-      text: "Повторить",
-      classStyle: "btn btn-primary font-size-20",
-    });
+    this.btn = utils.createHTMLElement(
+      "button",
+      "btn btn-accent color-black font-size-20"
+    );
+    this.btn.textContent = "Повторить";
 
     this.root.append(this.resultScore, this.text, this.btn);
   }
@@ -52,9 +53,24 @@ class ResultPage extends BaseComponent {
     this.checkScrore();
   }
 
+  public OnMount(): void {
+    this.audioPlayer.OnMount();
+    this.btn.addEventListener("click", this.onClick);
+  }
+
+  public OnUnMount(): void {
+    this.audioPlayer.OnUnMount();
+    this.btn.removeEventListener("click", this.onClick);
+  }
+
   public Render(): HTMLElement {
     return this.root;
   }
+
+  private onClick = () => {
+    this.store.Reset();
+    useRouter("quiz");
+  };
 }
 
 export default ResultPage;

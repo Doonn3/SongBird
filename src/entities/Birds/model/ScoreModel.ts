@@ -18,6 +18,7 @@ export class ScoreModel {
   }
 
   public ResetLevelScore() {
+    this.maxPointsPerLevel = 5;
     this.totalScore = 0;
   }
 }

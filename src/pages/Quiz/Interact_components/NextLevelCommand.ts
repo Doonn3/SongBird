@@ -76,7 +76,6 @@ export class NextLevelCommand implements ICommand<EmitPropsType> {
   };
 
   private onClickNextLevelBtnResult = () => {
-    this.props.store.Reset();
     useRouter("quiz-result");
   };
 }
