@@ -1,0 +1,1 @@
+export { ModalBirdInfo } from "./ModalBirdInfo";
