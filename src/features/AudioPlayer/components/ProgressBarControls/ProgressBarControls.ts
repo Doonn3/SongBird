@@ -1,135 +1,87 @@
+import { utils } from "@/shared/Utils";
+
+import AudioPlayerModel from "../../model/AudioPlayerModel";
+import { ProgressBarViewModel } from "./ProgressBarViewModel";
+
 import "./style.scss";
-import { State } from "Core";
 
-class ProgressBarModel {
-  private duration = new State(0);
-  private currTime = new State(0);
+function progressBarInfo() {
+  const root = utils.createHTMLElement("div", "progress-bar__info");
+  const time = utils.createHTMLElement("div", "progress-bar__time");
+  time.textContent = "0";
+  const maxDuration = utils.createHTMLElement("div", "progress-bar__max-time");
+  root.append(time, maxDuration);
 
-  public get Duration() {
-    return this.duration;
-  }
-
-  public get CurrTime() {
-    return this.currTime;
-  }
-
-  public ConvertSecondsToFormatMinSecond = (totalSeconds: number) => {
-    const minutes = Math.round(totalSeconds / 60);
-    const seconds = Math.round(totalSeconds % 60);
-
-    return `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+  return {
+    root,
+    time,
+    maxDuration,
   };
-
-  public SetDuration(val: number) {
-    this.duration.Set(val);
-  }
-
-  public UpdateCurrentTime(val: number) {
-    this.currTime.Set(val);
-  }
 }
 
-interface IControl {
-  onChangeProgressBar: (seconds: number) => void;
+function progressBar() {
+  const root = utils.createHTMLElement("div", "progress-bar");
+  const track = utils.createHTMLElement("div", "progress-bar__track");
+  const fill = utils.createHTMLElement("span", "progress-bar__fill");
+  track.append(fill);
+  root.append(track);
+
+  return {
+    root,
+    track,
+    fill,
+  };
 }
 
 export class ProgressBarControls {
-  private model = new ProgressBarModel();
-  private root: HTMLElement;
-  private track: HTMLElement;
-  private fill: HTMLElement;
-  private time: HTMLElement;
-  private maxDuration: HTMLElement;
+  private progressBarContext = progressBar();
+  private progressBarInfoContext = progressBarInfo();
 
-  private props: IControl;
+  private vm: ProgressBarViewModel;
 
-  public get Model() {
-    return this.model;
-  }
-
-  constructor(_props: IControl) {
-    this.props = _props;
-    this.root = document.createElement("div");
-    this.root.classList.add("progress-bar");
-
-    this.track = document.createElement("div");
-    this.track.classList.add("progress-bar__track");
-
-    this.fill = document.createElement("span");
-    this.fill.classList.add("progress-bar__fill");
-
-    this.track.append(this.fill);
+  constructor(audioModel: AudioPlayerModel) {
+    this.vm = new ProgressBarViewModel(audioModel, this);
 
     const barInfo = document.createElement("div");
     barInfo.classList.add("progress-bar__info");
 
-    this.time = document.createElement("div");
-    this.time.classList.add("progress-bar__time");
-    this.time.textContent = "0";
+    const convert = this.vm.ProgressBarModel.ConvertSecondsToFormatMinSecond(0);
 
-    this.maxDuration = document.createElement("div");
-    this.maxDuration.classList.add("progress-bar__max-time");
-    const convert = this.model.ConvertSecondsToFormatMinSecond(
-      this.model.Duration.Value
-    );
-    this.maxDuration.textContent = convert;
+    this.progressBarInfoContext.maxDuration.textContent = convert;
 
-    barInfo.append(this.time, this.maxDuration);
-
-    this.root.append(this.track, barInfo);
+    this.progressBarContext.root.append(this.progressBarInfoContext.root);
   }
 
-  private onMount() {
-    this.root.addEventListener("click", this.onChange);
-    this.model.Duration.AddObserver(this.updateDuration);
-    this.model.CurrTime.AddObserver(this.updateTime);
+  public OnMount() {
+    this.progressBarContext.root.addEventListener("click", this.onChange);
   }
 
   public OnUnmount() {
-    this.root.removeEventListener("click", this.onChange);
+    this.progressBarContext.root.removeEventListener("click", this.onChange);
   }
 
   private onChange = (event: MouseEvent) => {
-    const calcMaxTrackWidth = this.track.getBoundingClientRect().width;
+    const calcMaxTrackWidth =
+      this.progressBarContext.track.getBoundingClientRect().width;
     const offsetX = event.offsetX;
-    let percentage = (offsetX / calcMaxTrackWidth) * 100;
-    if (percentage > 99) percentage = 100;
-    if (percentage < 1) percentage = 0;
-    this.fill.style.width = `${percentage}%`;
-    const totalSeconds = (this.model.Duration.Value * percentage) / 100;
 
-    this.time.textContent =
-      this.model.ConvertSecondsToFormatMinSecond(totalSeconds);
-
-    if (this.props.onChangeProgressBar) this.props.onChangeProgressBar(totalSeconds);
+    this.vm.Calc(offsetX, calcMaxTrackWidth);
   };
 
-  private updateDuration = () => {
-    const convert = this.model.ConvertSecondsToFormatMinSecond(
-      this.model.Duration.Value
-    );
+  public UpdateDuration(duration: string) {
+    this.progressBarInfoContext.maxDuration.textContent = duration;
+  }
 
-    this.maxDuration.textContent = convert;
-  };
+  public UpdateTime(currTime: string) {
+    this.progressBarInfoContext.time.textContent = currTime;
+  }
 
-  private updateTime = () => {
-    const convert = this.model.ConvertSecondsToFormatMinSecond(
-      this.model.CurrTime.Value
-    );
-    this.time.textContent = convert;
-    this.updateProgressBar();
-  };
-
-  private updateProgressBar() {
-    const percentage =
-      (this.model.CurrTime.Value / this.model.Duration.Value) * 100;
-    console.log(percentage);
-    this.fill.style.width = `${percentage}%`;
+  public UpdateProgressBar(percentage: number) {
+    this.progressBarContext.fill.style.width = `${percentage}%`;
   }
 
   public Render(): HTMLElement {
-    this.onMount();
-    return this.root;
+    return this.progressBarContext.root;
   }
 }
 

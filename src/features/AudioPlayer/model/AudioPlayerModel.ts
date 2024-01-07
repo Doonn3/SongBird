@@ -1,8 +1,28 @@
+import { AudioModel } from "./AudioModel";
+import { SoundModel } from "./SoundModel";
+
 class AudioPlayerModel {
   private instanceAudio = new Audio();
+  private audioModel: AudioModel;
+  private soundModel: SoundModel;
+
   private durationCallback: (duration: number) => void = () => {};
   private currTimeCallback: (currentTime: number) => void = () => {};
+  private defaultState: () => void =  () => {};
   private endedCallback: () => void = () => {};
+
+  public get Audio() {
+    return this.audioModel;
+  }
+
+  public get Sound() {
+    return this.soundModel;
+  }
+
+  constructor() {
+    this.audioModel = new AudioModel(this.instanceAudio);
+    this.soundModel = new SoundModel(this.instanceAudio);
+  }
 
   private mount() {
     this.instanceAudio.addEventListener("loadedmetadata", this.eventDuration);
@@ -11,7 +31,7 @@ class AudioPlayerModel {
   }
 
   private unMount() {
-    this.Stop();
+    this.audioModel.Stop();
     this.instanceAudio.src = "";
     this.instanceAudio.removeEventListener(
       "loadedmetadata",
@@ -31,31 +51,6 @@ class AudioPlayerModel {
     this.instanceAudio.src = _audio;
 
     this.mount();
-  }
-
-  public Play() {
-    this.instanceAudio.play();
-  }
-
-  public Pause() {
-    this.instanceAudio.pause();
-  }
-
-  public Stop() {
-    this.instanceAudio.pause();
-    this.instanceAudio.currentTime = 0;
-  }
-
-  public SetTime(second: number) {
-    this.instanceAudio.currentTime = second;
-  }
-
-  public SoundMute(flag: boolean) {
-    this.instanceAudio.muted = flag;
-  }
-
-  public SoundPower(power: number) {
-    this.instanceAudio.volume = power;
   }
 
   public onDurationChange(callback: (duration: number) => void) {

@@ -33,13 +33,13 @@ class SoundModel {
 
   constructor(audioPlayerModel: AudioPlayerModel) {
     this.audioPlayerModel = audioPlayerModel;
-    this.audioPlayerModel.SoundPower(this.currentPowerSound / 100);
+    this.audioPlayerModel.Sound.SoundPower(this.currentPowerSound / 100);
   }
 
   public changeIcon() {
     this.isMute = !this.isMute;
 
-    this.audioPlayerModel.SoundMute(this.isMute);
+    this.audioPlayerModel.Sound.SoundMute(this.isMute);
 
     if (this.isMute) {
       this.tempPowerSound = this.currentPowerSound;
@@ -62,7 +62,7 @@ class SoundModel {
     this.changeSoundIcon(calc);
 
     this.currentPowerSound = calc;
-    this.audioPlayerModel.SoundPower(calc / 100);
+    this.audioPlayerModel.Sound.SoundPower(calc / 100);
 
     return calc;
   }

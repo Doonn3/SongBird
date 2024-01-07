@@ -19,21 +19,10 @@ class AudioPlayer {
   private soundControls: SoundControls;
 
   constructor() {
+    this.progressBarControls = new ProgressBarControls(this.model);
     this.soundControls = new SoundControls(this.model);
 
-    this.playPauseStopControls = new PlayPauseStopControls({
-      onPlay: this.onPlay,
-      onPause: this.onPause,
-      onStop: this.onStop,
-    });
-
-    this.progressBarControls = new ProgressBarControls({
-      onChangeProgressBar: this.onChangeProgressBar,
-    });
-
-    this.model.onEnded(this.onEnded);
-    this.model.onDurationChange(this.onDuration);
-    this.model.onCurrentChange(this.onCurrentTime);
+    this.playPauseStopControls = new PlayPauseStopControls(this.model);
 
     this.root = document.createElement("div");
     this.root.classList.add("audio-player");
@@ -48,55 +37,21 @@ class AudioPlayer {
   }
 
   public OnMount() {
+    this.playPauseStopControls.OnMount();
     this.soundControls.OnMount();
+    this.progressBarControls.OnMount();
   }
 
   public OnUnMount() {
-    this.model.Destroy();
+    this.playPauseStopControls.OnUnmount();
     this.soundControls.OnUnMount();
+    this.progressBarControls.OnUnmount();
+    this.model.Destroy();
   }
 
   public SetAudioSrc(audioSrc: string) {
     this.model.SetAudio(audioSrc);
   }
-
-  public Play() {
-    this.onPlay();
-    this.playPauseStopControls.Play();
-  }
-
-  private onPlay = () => {
-    this.model.Play();
-  };
-
-  private onPause = () => {
-    this.model.Pause();
-  };
-
-  private onStop = () => {
-    this.model.Stop();
-    this.playPauseStopControls.Stop();
-  };
-
-  public OnReset() {
-    this.onStop();
-  }
-
-  private onEnded = () => {
-    this.playPauseStopControls.Stop();
-  };
-
-  private onDuration = (duration: number) => {
-    this.progressBarControls.Model.SetDuration(duration);
-  };
-
-  private onCurrentTime = (time: number) => {
-    this.progressBarControls.Model.UpdateCurrentTime(time);
-  };
-
-  private onChangeProgressBar = (time: number) => {
-    this.model.SetTime(time);
-  };
 
   public Render = () => {
     return this.root;

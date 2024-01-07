@@ -3,82 +3,66 @@ import PauseIcon from "../../assets/pause.svg";
 import StopIcon from "../../assets/stop.svg";
 
 import "./style.scss";
+import { utils } from "@/shared/Utils";
+import AudioPlayerModel from "../../model/AudioPlayerModel";
+import { Model } from "./Model";
 
-interface IControl {
-  onPlay?: () => void;
-  onPause?: () => void;
-  onStop?: () => void;
+function controls() {
+  const root = utils.createHTMLElement("div", "play-pause-stop-controls");
+  const playPause = utils.createHTMLElement("div", "play-pause-wraper");
+  const stop = utils.createHTMLElement("div", "stop-wraper");
+  root.append(playPause, stop);
+  return {
+    root,
+    playPause,
+    stop,
+  };
 }
 
 class PlayPauseStopControls {
-  private root: HTMLElement;
-  private playPause: HTMLElement;
-  private stop: HTMLElement;
-  private isPlay = false;
+  private controls = controls();
+  private model: Model;
 
-  private props: IControl | null = null;
-  constructor(_props: IControl) {
-    this.root = document.createElement("div");
-    this.root.classList.add("play-pause-stop-controls");
+  constructor(audioPlayer: AudioPlayerModel) {
+    this.model = new Model(audioPlayer, this);
 
-    this.playPause = document.createElement("div");
-    this.playPause.classList.add("play-pause-wraper");
-    this.playPause.insertAdjacentHTML(
+    this.controls.playPause.insertAdjacentHTML(
       "beforeend",
-      this.isPlay ? PauseIcon : PlayIcon
+      this.model.IsPlay ? PauseIcon : PlayIcon
     );
 
-    this.stop = document.createElement("div");
-    this.stop.classList.add("stop-wraper");
-    this.stop.insertAdjacentHTML("beforeend", StopIcon);
-
-    this.root.append(this.playPause, this.stop);
-
-    this.props = _props;
+    this.controls.stop.insertAdjacentHTML("beforeend", StopIcon);
   }
 
-  private onMount = () => {
-    this.playPause.addEventListener("click", this.onTogglePlay);
-    this.stop.addEventListener("click", this.onStop);
+  public OnMount = () => {
+    this.controls.playPause.addEventListener("click", this.onTogglePlay);
+    this.controls.stop.addEventListener("click", this.onStop);
   };
 
-  private onUnmount = () => {
-    this.playPause.removeEventListener("click", this.onTogglePlay);
-    this.stop.removeEventListener("click", this.onStop);
+  public OnUnmount = () => {
+    this.onStop();
+    this.controls.playPause.removeEventListener("click", this.onTogglePlay);
+    this.controls.stop.removeEventListener("click", this.onStop);
   };
 
   private onTogglePlay = () => {
-    this.isPlay = !this.isPlay;
-
-    this.playPause.innerHTML = `${this.isPlay ? PauseIcon : PlayIcon}`; // перерендериваем элемент после изменения состояния
-
-    if (this.isPlay) {
-      if (this.props?.onPlay) this.props.onPlay();
-    } else {
-      if (this.props?.onPause) this.props.onPause();
-    }
+    this.model.Toggle();
+    this.changeIcon(); // перерендериваем элемент после изменения состояния
   };
 
   private onStop = () => {
-    this.Stop();
-    if (this.props?.onStop) this.props.onStop();
+    this.model.Stop();
+    this.changeIcon();
   };
 
-  public Stop() {
-    this.isPlay = false;
-    this.playPause.innerHTML = `${this.isPlay ? PauseIcon : PlayIcon}`; // перерендериваем элемент после изменения состояния
-  }
-
-  public Play() {
-    this.isPlay = true;
-    if (this.isPlay) {
-      this.playPause.innerHTML = `${this.isPlay ? PauseIcon : PlayIcon}`; // перерендериваем элемент после изменения состояния
-    }
+  public changeIcon() {
+    this.controls.playPause.innerHTML = `${
+      this.model.IsPlay ? PauseIcon : PlayIcon
+    }`;
   }
 
   public Render() {
-    this.onMount();
-    return this.root;
+    return this.controls.root;
   }
 }
 
