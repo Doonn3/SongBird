@@ -20,16 +20,18 @@ class View {
     this.root = utils.createHTMLElement("div", "modal");
     this.root.style.display = "none";
     this.content = utils.createHTMLElement("div", "modal__content");
-    const contentLeft = utils.createHTMLElement("div", "modal__content-left");
+    const contentLeft = utils.createHTMLElement("div", "modal__left");
 
+    const div = utils.createHTMLElement("div");
     this.img = utils.createHTMLElement("img") as HTMLImageElement;
     this.img.src = props.urlSrc;
+    div.append(this.img);
     const wrapperAudio = utils.createHTMLElement("div");
     wrapperAudio.append(props.slot);
 
-    contentLeft.append(this.img, wrapperAudio);
+    contentLeft.append(div, wrapperAudio);
 
-    const contentRight = utils.createHTMLElement("div", "modal__content-right");
+    const contentRight = utils.createHTMLElement("div", "modal__right");
 
     const wrapper = utils.createHTMLElement(
       "div",
@@ -81,8 +83,9 @@ export class ModalBirdInfo {
   }
 
   public SetInfo(props: PropsType) {
+    this.audioPlayer.OnUnMount();
     this.audioPlayer.SetAudioSrc(props.audioSrc);
-    this.audioPlayer.OnReset();
+    this.audioPlayer.OnMount();
     this.view.SetProps(props);
   }
 
@@ -91,23 +94,21 @@ export class ModalBirdInfo {
   }
 
   public Hide() {
+    this.audioPlayer.OnUnMount();
     this.view.Hide();
   }
 
   public OnMount() {
     this.view.Context.root.addEventListener("click", this.emitClose);
-    this.audioPlayer.OnMount();
   }
 
   public OnUnMount() {
     this.view.Context.root.removeEventListener("click", this.emitClose);
-    this.audioPlayer.OnUnMount();
   }
 
   private emitClose = (e: Event) => {
     const target = e.target;
     if (target === this.view.Context.root) {
-      this.audioPlayer.OnReset();
       this.actionView();
     }
   };

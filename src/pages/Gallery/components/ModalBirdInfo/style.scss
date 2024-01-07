@@ -13,44 +13,48 @@
     backdrop-filter: blur(20px);
 
     &__content {
-        display: flex;
-        gap: 5px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
 
         width: 800px;
-        height: 420px;
+        height: 430px;
 
         padding: 5px;
 
         background-color: rgba(0, 0, 0, 0.5);
         border-radius: 10px;
-
-        &-left {
-            display: flex;
-            justify-content: space-between;
-            flex-direction: column;
-
-            width: 400px;
-            height: 100%;
-
-            gap: 5px;
-
-            & > img {
-                object-fit: cover;
-            }
-        }
-
-        &-right {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 400px;
-
-            &-wrapper {
-                display: flex;
-                align-items: center;
-                flex-direction: column;
-            }
-        }
     }
+}
+
+.modal > .modal__content > .modal__left {
+    display: grid;
+    grid-template-rows: 70% auto;
+    gap: 5px;
+    height: inherit;
+}
+
+.modal__left > div {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.modal__left > div > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal > .modal__content > .modal__right {
+    display: grid;
+    grid-template-rows: 30% auto;
+    gap: 5px;
+    height: inherit;
+}
+
+.modal__right > div {
+    display: flex;
+    flex-direction: column;
 }
