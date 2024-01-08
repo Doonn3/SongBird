@@ -1,7 +1,11 @@
 .card {
     position: relative;
-    width: 400px;
-    height: 300px;
+
+    // width: 400px;
+    // height: 300px;
+
+    width: 300px;
+    height: 200px;
 
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 5px;
@@ -39,5 +43,40 @@
         transform: translateY(-50%);
 
         background-color: rgba(0, 0, 0, 0.4);
+    }
+}
+
+// mm: 400px
+// sm: 640px
+// md: 768px
+// lg: 1024px
+// xl: 1280px
+// 2xl: 1536px
+
+@media (min-width: 400px) {
+    .card {
+        width: 400px;
+        height: 300px;
+    }
+}
+
+@media (min-width: 640px) {
+    .card {
+        width: 300px;
+        height: 200px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .card {
+        width: 400px;
+        height: 300px;
+    }
+}
+
+@media (min-width: 1536px) {
+    .card {
+        width: 500px;
+        height: 400px;
     }
 }
