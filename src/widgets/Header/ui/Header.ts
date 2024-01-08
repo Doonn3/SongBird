@@ -3,9 +3,9 @@ import { utils } from "@/shared/Utils";
 
 import "./style.scss";
 
-const STYLE_LOGO = "btn btn-ghost font-size-32 color-black color-grad fw-700";
+const STYLE_LOGO = "btn btn-ghost font-size-24 color-black color-grad fw-700 breakpoint-1536:font-size-28";
 const STYLE_LINK =
-  "btn btn-ghost font-size-20 color-white bg-dark-gray hover:bg-white/10";
+  "btn btn-ghost font-size-20 color-white bg-dark-gray hover:bg-white/10 breakpoint-1536:font-size-24";
 
 class Header {
   private root: HTMLElement;
