@@ -10,6 +10,24 @@ import { ModalBirdInfo } from "../components/ModalBirdInfo";
 
 import "./style.scss";
 
+function view() {
+  const root = utils.createHTMLElement("section", "gallery");
+
+  const content = utils.createHTMLElement("section", "gallery__content");
+
+  const wrapperHeader = utils.createHTMLElement(
+    "div",
+    "gallery__wrapper-header"
+  );
+
+  root.append(wrapperHeader, content);
+  return {
+    root,
+    wrapperHeader,
+    content,
+  };
+}
+
 export class GalleryPage extends BaseComponent {
   // private header = new Header("fixed top-10 z-index-2000");
   private header = new Header("fixed top-5 z-index-2000");
@@ -19,6 +37,8 @@ export class GalleryPage extends BaseComponent {
   private cards: GalleryCard[] = [];
 
   private store = new BirdsStore();
+
+  private view = view();
 
   constructor() {
     super();
@@ -36,7 +56,7 @@ export class GalleryPage extends BaseComponent {
           title: bird.name,
           urlImg: bird.image,
         },
-        { onClickCard: this.onClickCard }
+        { onClickCard: this.onClickCard.bind(this) }
       );
     });
 
@@ -59,6 +79,14 @@ export class GalleryPage extends BaseComponent {
     this.modalInfo.Show();
   };
 
+  public Init() {
+    this.view.content.append(
+      ...this.createCards().map((card) => card.Render())
+    );
+    this.view.wrapperHeader.append(this.header.Render());
+    this.view.root.append(this.modalInfo.Render());
+  }
+
   public OnMount() {
     this.cards.forEach((card) => {
       card.OnMount();
@@ -77,19 +105,6 @@ export class GalleryPage extends BaseComponent {
   }
 
   public Render() {
-    const root = utils.createHTMLElement("section", "gallery");
-
-    const content = utils.createHTMLElement("section", "gallery__content");
-
-    const wrapperHeader = utils.createHTMLElement(
-      "div",
-      "gallery__wrapper-header"
-    );
-    wrapperHeader.append(this.header.Render());
-
-    content.append(...this.createCards().map((card) => card.Render()));
-
-    root.append(wrapperHeader, content, this.modalInfo.Render());
-    return root;
+    return this.view.root;
   }
 }
