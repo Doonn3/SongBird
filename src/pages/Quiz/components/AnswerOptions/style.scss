@@ -1,4 +1,7 @@
 .answer-options {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin: 0;
   padding: 0;
 
@@ -47,7 +50,7 @@
 
     & > p {
       margin: 0;
-      
+
       pointer-events: none;
     }
   }
