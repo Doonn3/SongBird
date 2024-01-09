@@ -5,12 +5,15 @@ import { ListQuestion } from "../components/ListQuestion/ListQuestion";
 import { AnswerOptions } from "../components/AnswerOptions/AnswerOptions";
 import { CurrentQuestion } from "../components/CurrentQuestion/CurrentQuestion";
 import { NextButton } from "../components/NextButton/NextButton";
+import { BirdDescription } from "../components/BirdDescription/BirdDescription";
+
 import { useRouter } from "@/shared/Core";
 
 type PropsType = {
   listQuestion: ListQuestion;
   answerOptions: AnswerOptions;
   currentQuestion: CurrentQuestion;
+  birdDescription: BirdDescription;
   nextLevelBtn: NextButton;
   store: BirdsStore;
 };
@@ -71,6 +74,11 @@ export class NextLevelCommand implements ICommand<EmitPropsType> {
 
   private onClickNextLevelBtn = () => {
     console.log("CLICK Next Level");
+    this.props.currentQuestion.OnUnMount();
+    this.props.currentQuestion.OnMount();
+
+    this.props.birdDescription.DefaultState();
+
     this.props.store.NextLevel();
   };
 

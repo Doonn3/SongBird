@@ -59,6 +59,10 @@ export class BirdDescription {
     this.root.textContent = "Выберите Птицу Из Списка";
   }
 
+  public DefaultState() {
+    this.root.textContent = "Выберите Птицу Из Списка";
+  }
+
   public SetInfo(info: InfoType) {
     this.img.src = info.img;
     this.title.textContent = info.title;

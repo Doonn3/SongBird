@@ -57,6 +57,7 @@ class QuizPage extends BaseComponent {
       currentQuestion: this.currentQuestion,
       listQuestion: this.listQuestion,
       nextLevelBtn: this.nextBtn,
+      birdDescription: this.birdDescription,
       store: this.store,
     });
 
