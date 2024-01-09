@@ -1,4 +1,4 @@
-export abstract class BaseComponent {
+export class BaseComponent {
   public Init() {}
 
   public OnMount() {}
@@ -9,3 +9,14 @@ export abstract class BaseComponent {
     return this.Render();
   }
 }
+// export abstract class BaseComponent {
+// public Init() {}
+//
+// public OnMount() {}
+//
+// public OnUnMount() {}
+//
+// public Render(): HTMLElement {
+// return this.Render();
+// }
+// }
