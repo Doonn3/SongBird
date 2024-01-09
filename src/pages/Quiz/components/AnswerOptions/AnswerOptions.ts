@@ -33,10 +33,11 @@ export class AnswerOptions {
 
   private onClickAnswer = (event: Event) => {
     const index = this.items.indexOf(event.target as HTMLLIElement);
-
-    if (this.itemClickIndexs.includes(index)) return;
-    this.itemClickIndexs.push(index);
     if (index < 0) return;
+
+    // if (this.itemClickIndexs.includes(index) && this.isSuccess) return;
+    // this.itemClickIndexs.push(index);
+
     this.props?.emit(index);
   };
 
