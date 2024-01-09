@@ -51,7 +51,6 @@ export class GameModel {
     } else {
       this.scoreModel.DecreaseMaxPoints();
     }
-
     return result;
   }
 

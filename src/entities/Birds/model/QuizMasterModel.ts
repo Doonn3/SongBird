@@ -4,6 +4,7 @@ export class QuizMasterModel {
   private currentQuestion: BirdType | null = null;
 
   private choiceAnswers: BirdType[] = [];
+  private tempChoiceAnswerIndex: number[] = [];
 
   public get CurrentQuestion() {
     return this.currentQuestion;
@@ -15,6 +16,8 @@ export class QuizMasterModel {
 
   public Set(data: BirdType[]) {
     this.choiceAnswers = this.mixing(data);
+    this.tempChoiceAnswerIndex = [];
+    console.log('SEEEEEEEETTTTTTTTTTT');
 
     // Загадываеи ответ
     const randomIndex = Math.floor(Math.random() * this.choiceAnswers.length);
@@ -23,6 +26,8 @@ export class QuizMasterModel {
   }
 
   public IsAnswerCorrect(index: number) {
+    if (this.tempChoiceAnswerIndex.includes(index)) return null;
+    this.tempChoiceAnswerIndex.push(index);
     if (this.choiceAnswers[index] === this.currentQuestion) {
       return true;
     }
