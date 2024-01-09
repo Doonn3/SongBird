@@ -4,16 +4,55 @@ import { utils } from "@/shared/Utils";
 import { BirdsStore } from "@/entities/Birds";
 import { AudioPlayer } from "@/features/AudioPlayer";
 
-import ASD from "@/shared/assets/audio/rock-privet.mp3";
+import ROCK_PRIVET_AUDIO from "@/shared/assets/audio/rock-privet.mp3";
 
 import "./style.scss";
 
-class ResultPage extends BaseComponent {
-  private root: HTMLElement;
-  private resultScore: HTMLElement;
-  private text: HTMLElement;
+const TEXT_BTN = "Повторить";
+const TEXT_LOSE = "Мало очков, что бы получить приз нужно минимум 20 очков.";
 
-  private btn: HTMLElement;
+function wrapperScore() {
+  const wrapperScore = utils.createHTMLElement("div", "result__score");
+  const textScore = utils.createHTMLElement("span", "font-size-24");
+  textScore.textContent = "Score: ";
+  const resultScore = utils.createHTMLElement("span", "font-size-24");
+  wrapperScore.append(textScore, resultScore);
+
+  return {
+    wrapperScore,
+    resultScore,
+  };
+}
+
+function view() {
+  const root = utils.createHTMLElement("section", "result");
+
+  const ws = wrapperScore();
+
+  const wrapper = utils.createHTMLElement("div", "result__content");
+  const text = utils.createHTMLElement("p", "font-size-24");
+  const prize = utils.createHTMLElement("div");
+  const btn = utils.createHTMLElement(
+    "button",
+    "btn btn-accent color-black font-size-28"
+  );
+  btn.textContent = TEXT_BTN;
+  wrapper.append(text, btn);
+
+  root.append(ws.wrapperScore, wrapper);
+
+  return {
+    root,
+    resultScore: ws.resultScore,
+    wrapper,
+    text,
+    prize,
+    btn,
+  };
+}
+
+class ResultPage extends BaseComponent {
+  private view = view();
 
   private audioPlayer = new AudioPlayer();
 
@@ -21,31 +60,18 @@ class ResultPage extends BaseComponent {
 
   constructor() {
     super();
-    this.root = utils.createHTMLElement("section", "result");
-
-    this.resultScore = utils.createHTMLElement("span");
-
-    this.text = utils.createHTMLElement("p");
-
-    this.btn = utils.createHTMLElement(
-      "button",
-      "btn btn-accent color-black font-size-20"
-    );
-    this.btn.textContent = "Повторить";
-
-    this.root.append(this.resultScore, this.text, this.btn);
   }
 
   private checkScrore() {
     const score = this.store.GetScore();
-    this.resultScore.textContent = `${score}`;
+    this.view.resultScore.textContent = `${score}`;
 
-    if (score < 20) {
-      this.text.textContent = "Мало Очьков Что бы Получить Приз!!!";
+    if (score < 1) {
+      this.view.text.textContent = TEXT_LOSE;
     } else {
-      this.text.textContent = "Победа!!!";
-      this.root.append(this.audioPlayer.Render());
-      this.audioPlayer.SetAudioSrc(ASD);
+      this.view.text.remove();
+      this.view.wrapper.prepend(this.audioPlayer.Render());
+      this.audioPlayer.SetAudioSrc(ROCK_PRIVET_AUDIO);
     }
   }
 
@@ -55,16 +81,16 @@ class ResultPage extends BaseComponent {
 
   public OnMount(): void {
     this.audioPlayer.OnMount();
-    this.btn.addEventListener("click", this.onClick);
+    this.view.btn.addEventListener("click", this.onClick);
   }
 
   public OnUnMount(): void {
     this.audioPlayer.OnUnMount();
-    this.btn.removeEventListener("click", this.onClick);
+    this.view.btn.removeEventListener("click", this.onClick);
   }
 
   public Render(): HTMLElement {
-    return this.root;
+    return this.view.root;
   }
 
   private onClick = () => {

@@ -61,7 +61,6 @@ export class NextLevelCommand implements ICommand<EmitPropsType> {
     if (data.birdAnswer) {
       this.props.currentQuestion.Default();
       this.props.currentQuestion.SetAudio(data.birdAnswer.audio);
-      this.props.currentQuestion.Play();
     }
   }
 

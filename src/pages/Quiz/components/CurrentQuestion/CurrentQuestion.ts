@@ -55,10 +55,6 @@ export class CurrentQuestion {
     this.title.textContent = "*******";
   }
 
-  public Play() {
-    this.audioPlayer.Play();
-  }
-
   public Render() {
     return this.root;
   }
