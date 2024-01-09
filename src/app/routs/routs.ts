@@ -12,31 +12,31 @@ const ROUT__DEFAULT = {
 const ROUT__HOME = {
   path: "/home",
   name: "home",
-  component: new Home(),
+  component: Home,
 };
 
 const ROUTE_QUIZ = {
   path: "/quiz",
   name: "quiz",
-  component: new QuizPage(),
+  component: QuizPage,
 };
 
 const ROUTE_RESULT_PAGE = {
   path: "/quiz-result",
   name: "quiz-result",
-  component: new ResultPage(),
+  component: ResultPage,
 };
 
 const ROUT__GALLERY = {
   path: "/gallery",
   name: "gallery",
-  component: new GalleryPage(),
+  component: GalleryPage,
 };
 
 const ROUT_NOT_FOUND_PAGE = {
-  path: "/*",
+  path: "*",
   name: "not-found-page",
-  component: new NotFoundPage(),
+  component: NotFoundPage,
 };
 
 export const routs = [
