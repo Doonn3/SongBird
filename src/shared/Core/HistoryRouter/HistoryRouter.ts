@@ -1,46 +1,24 @@
 import { BaseComponent } from "..";
-import { IRoute, RoutesType } from "./Types/Types";
+import { RoutesType } from "./Types/Types";
+import { ComponentModel } from "./model/ComponentModel";
+import { RouterModel } from "./model/RouterModel";
 
-class RouterController {
-  private prevTempRoute: IRoute | null = null;
-  private currTempRoute: IRoute | null = null;
-
-  public GetRoute(urlPath: string, routes: RoutesType) {
-    const route = this.findRoute(urlPath, routes);
-
-    if (this.currTempRoute === null) {
-      this.currTempRoute = route;
-    } else {
-      this.prevTempRoute = this.currTempRoute;
-      this.currTempRoute = route;
-    }
-
-    return { prev: this.prevTempRoute, curr: this.currTempRoute };
-  }
-
-  private findRoute(urlPath: string, routes: RoutesType) {
-    const route = routes.find((route) => route.path === urlPath);
-    return route ? route : null;
-  }
+interface EmitType {
+  (mountComponent: BaseComponent): void;
 }
 
 export class HistoryRouter {
   public static Instance: HistoryRouter;
   private browserHistory = window.history;
-  private routes: RoutesType;
 
-  private routeController = new RouterController();
+  private routerModel: RouterModel;
+  private componentModel = new ComponentModel();
 
-  public EmitRender!: (mountComponent: BaseComponent) => void;
-
-  public EmitUnMountComponent!: (unMountComponent: BaseComponent) => void;
-
-  public get Routes() {
-    return this.routes;
-  }
+  public EmitRender: EmitType | null = null;
 
   constructor(routes: RoutesType) {
-    this.routes = routes;
+    this.routerModel = new RouterModel(routes);
+
     HistoryRouter.Instance = this;
   }
 
@@ -57,27 +35,18 @@ export class HistoryRouter {
   }
 
   private onURLChange() {
-    console.log("URL changed to", window.location.pathname);
+    const pathLocation = window.location.pathname;
 
-    const route = this.routeController.GetRoute(
-      window.location.pathname,
-      this.routes
-    );
+    const route = this.routerModel.GetRoute(pathLocation);
 
-    if (route.prev) {
-      const component = route.prev.component;
-      if (component) {
-        this.EmitUnMountComponent(component);
-      }
+    const component = this.componentModel.GetComponent(route);
+
+    if (route?.redirect) {
+      this.LinkTo(route.redirect);
     }
 
-    if (route.curr) {
-      const redirect = route.curr.redirect;
-      if (redirect) {
-        this.LinkTo(redirect);
-      }
-      const component = route.curr.component;
-      if (component) {
+    if (component) {
+      if (this.EmitRender) {
         this.EmitRender(component);
       }
     }

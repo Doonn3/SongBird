@@ -3,7 +3,7 @@ import { BaseComponent } from "../../BaseComponent/BaseComponent";
 export interface IRoute {
   path: string;
   name: string;
-  component?: BaseComponent;
+  component?: typeof BaseComponent;
   redirect?: string;
 }
 
