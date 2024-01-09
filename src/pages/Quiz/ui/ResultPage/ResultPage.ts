@@ -9,7 +9,7 @@ import ROCK_PRIVET_AUDIO from "@/shared/assets/audio/rock-privet.mp3";
 import "./style.scss";
 
 const TEXT_BTN = "Повторить";
-const TEXT_LOSE = "Мало очков, что бы получить приз нужно минимум 20 очков.";
+const TEXT_LOSE = "Мало очков, что бы получить приз нужно минимум 15 очков.";
 
 function wrapperScore() {
   const wrapperScore = utils.createHTMLElement("div", "result__score");
@@ -66,7 +66,7 @@ class ResultPage extends BaseComponent {
     const score = this.store.GetScore();
     this.view.resultScore.textContent = `${score}`;
 
-    if (score < 1) {
+    if (score < 15) {
       this.view.text.textContent = TEXT_LOSE;
     } else {
       this.view.text.remove();
