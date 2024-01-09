@@ -64,15 +64,21 @@ export class BirdDescription {
   }
 
   public SetInfo(info: InfoType) {
+    this.audioPlayer.OnUnMount();
     this.img.src = info.img;
     this.title.textContent = info.title;
     this.subtitle.textContent = info.subtitle;
     this.description.textContent = info.description;
     this.audioPlayer.SetAudioSrc(info.audio);
+    this.audioPlayer.OnMount();
 
     this.root.textContent = "";
     this.root.append(this.container, this.description);
   }
+
+  public OnMount() {}
+
+  public OnUnMount() {}
 
   public Render() {
     return this.root;
