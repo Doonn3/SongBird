@@ -21,7 +21,7 @@ export class ProgressBarModel {
   public ConvertSecondsToFormatMinSecond = (totalSeconds: number) => {
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = Math.round(totalSeconds % 60);
-    return `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+    return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
   };
 
   public Calc(offsetX: number, width: number) {

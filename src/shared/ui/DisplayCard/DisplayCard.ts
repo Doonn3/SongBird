@@ -1,4 +1,4 @@
-import "./style.scss";
+import './style.scss';
 
 type PropsType = {
   id: number;
@@ -13,32 +13,32 @@ interface IAction {
 
 export function DisplayCard(props: PropsType, action?: IAction) {
   const render = (): HTMLElement => {
-    const root = document.createElement("div");
-    root.classList.add("display-card");
-    root.setAttribute("data-id", `${props.title}-${props.id}`);
+    const root = document.createElement('div');
+    root.classList.add('display-card');
+    root.setAttribute('data-id', `${props.title}-${props.id}`);
 
-    const containerTop = document.createElement("div");
-    containerTop.classList.add("display-card__top");
+    const containerTop = document.createElement('div');
+    containerTop.classList.add('display-card__top');
 
     containerTop.insertAdjacentHTML(
-      "beforeend",
+      'beforeend',
       `
     <img class="display-card__img" 
       src="${props.urlImg}" 
       alt="${props.title}">
 
     <span class="display-card__title">${props.title}</span>
-    `
+    `,
     );
 
-    const containerBottom = document.createElement("div");
-    containerBottom.classList.add("display-card__bottom");
-    containerBottom.append(props.slot ? props.slot : "");
+    const containerBottom = document.createElement('div');
+    containerBottom.classList.add('display-card__bottom');
+    containerBottom.append(props.slot ? props.slot : '');
 
     root.append(containerTop, containerBottom);
 
     if (action) {
-      containerTop.addEventListener("click", () => {
+      containerTop.addEventListener('click', () => {
         action.onClick(`${props.title}`);
       });
     }

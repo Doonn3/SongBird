@@ -1,7 +1,7 @@
-import type { BirdType } from "../data/BirdDataType";
-import { LevelModel } from "./LevelModel";
-import { QuizMasterModel } from "./QuizMasterModel";
-import { ScoreModel } from "./ScoreModel";
+import type { BirdType } from '../data/BirdDataType';
+import { LevelModel } from './LevelModel';
+import { QuizMasterModel } from './QuizMasterModel';
+import { ScoreModel } from './ScoreModel';
 
 export class GameModel {
   private birds: BirdType[][] = [];

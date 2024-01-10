@@ -1,4 +1,4 @@
-import type { BirdType } from "../data/BirdDataType";
+import type { BirdType } from '../data/BirdDataType';
 
 export class QuizMasterModel {
   private currentQuestion: BirdType | null = null;

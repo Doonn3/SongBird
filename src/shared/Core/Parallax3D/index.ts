@@ -1,1 +1,1 @@
-export { Parallax3D } from "./Parallax3D";
+export { Parallax3D } from './Parallax3D';

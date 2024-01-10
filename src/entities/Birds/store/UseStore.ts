@@ -1,17 +1,17 @@
-import BirdsDataRu from "../data/birdsDataRu";
-import type { BirdType } from "../data/BirdDataType";
-import { GameModel } from "../model/GameModel";
+import BirdsDataRu from '../data/birdsDataRu';
+import type { BirdType } from '../data/BirdDataType';
+import { GameModel } from '../model/GameModel';
 
-import { EventSystem } from "Core";
+import { EventSystem } from 'Core';
 
 type Type =
-  | "event-start-level"
-  | "event-details-answer"
-  | "get-choice-answers"
-  | "event-get-score"
-  | "event-wrong-answer"
-  | "event-correct-answer"
-  | "event-end-level";
+  | 'event-start-level'
+  | 'event-details-answer'
+  | 'get-choice-answers'
+  | 'event-get-score'
+  | 'event-wrong-answer'
+  | 'event-correct-answer'
+  | 'event-end-level';
 
 export type EmitPropsType = {
   birdsChoise: BirdType[];
@@ -24,13 +24,13 @@ export class BirdsStore extends EventSystem<Type> {
   private model = new GameModel(BirdsDataRu);
 
   public GetScore() {
-    console.log("GET SCORE  ", this.model.ScoreModel.CurrentScore);
+    console.log('GET SCORE  ', this.model.ScoreModel.CurrentScore);
     return this.model.ScoreModel.CurrentScore;
   }
 
   public Start() {
     this.model.Start();
-    this.Emit<EmitPropsType>("event-start-level", {
+    this.Emit<EmitPropsType>('event-start-level', {
       birdsChoise: this.model.QuizMasterModel.ChoiceAnswers,
       birdAnswer: this.model.QuizMasterModel.CurrentQuestion,
     });
@@ -39,12 +39,12 @@ export class BirdsStore extends EventSystem<Type> {
   public Reset() {
     this.model.ScoreModel.ResetLevelScore();
     this.model.LevelModel.Reset();
-    this.Emit("event-get-score", this.model.ScoreModel.CurrentScore);
+    this.Emit('event-get-score', this.model.ScoreModel.CurrentScore);
   }
 
   public NextLevel() {
     this.model.NextLevel();
-    this.Emit<EmitPropsType>("event-start-level", {
+    this.Emit<EmitPropsType>('event-start-level', {
       birdsChoise: this.model.QuizMasterModel.ChoiceAnswers,
       birdAnswer: this.model.QuizMasterModel.CurrentQuestion,
     });
@@ -53,7 +53,7 @@ export class BirdsStore extends EventSystem<Type> {
       this.model.LevelModel.Level >=
       this.model.LevelModel.LevelList.length - 1
     ) {
-      this.Emit("event-end-level", {});
+      this.Emit('event-end-level', {});
     }
   }
 
@@ -69,19 +69,19 @@ export class BirdsStore extends EventSystem<Type> {
     const result = this.model.IsAnswerCorrect(index);
     console.log(result);
     this.Emit(
-      "event-details-answer",
-      this.model.QuizMasterModel.ChoiceAnswers[index]
+      'event-details-answer',
+      this.model.QuizMasterModel.ChoiceAnswers[index],
     );
 
     if (result) {
       this.Emit(
-        "event-correct-answer",
-        this.model.QuizMasterModel.CurrentQuestion
+        'event-correct-answer',
+        this.model.QuizMasterModel.CurrentQuestion,
       );
     }
 
-    this.Emit("event-get-score", this.model.ScoreModel.CurrentScore);
-    console.log("GET SCORE  ", this.model.ScoreModel.CurrentScore);
+    this.Emit('event-get-score', this.model.ScoreModel.CurrentScore);
+    console.log('GET SCORE  ', this.model.ScoreModel.CurrentScore);
     return result;
   }
 

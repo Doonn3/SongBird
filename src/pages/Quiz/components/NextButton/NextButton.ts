@@ -1,4 +1,4 @@
-import "./style.scss";
+import './style.scss';
 
 interface IAction {
   (): void;
@@ -12,15 +12,15 @@ export class NextButton {
   private action: IAction | null = null;
 
   private classStyle = {
-    default: "btn next-btn color-white bg-dark-gray",
-    success: "btn next-btn color-white bg-success",
+    default: 'btn next-btn color-white bg-dark-gray',
+    success: 'btn next-btn color-white bg-success',
   };
 
   constructor(action?: IAction) {
-    this.root = document.createElement("btn");
-    this.root.setAttribute("class", this.classStyle.default);
+    this.root = document.createElement('btn');
+    this.root.setAttribute('class', this.classStyle.default);
 
-    this.root.textContent = "Следующий Уровень";
+    this.root.textContent = 'Следующий Уровень';
 
     if (action) this.action = action;
   }
@@ -30,16 +30,16 @@ export class NextButton {
   }
 
   public OnMount() {
-    this.root.addEventListener("click", this.onClick);
+    this.root.addEventListener('click', this.onClick);
   }
 
   public OnUnMount() {
-    this.root.removeEventListener("click", this.onClick);
+    this.root.removeEventListener('click', this.onClick);
     this.action = null;
   }
 
   public Highlight = () => {
-    this.root.setAttribute("class", this.classStyle.success);
+    this.root.setAttribute('class', this.classStyle.success);
     this.isHighlight = true;
   };
 
@@ -48,7 +48,7 @@ export class NextButton {
   }
 
   public RemoveHighlight = () => {
-    this.root.setAttribute("class", this.classStyle.default);
+    this.root.setAttribute('class', this.classStyle.default);
     this.isHighlight = false;
   };
 
@@ -57,7 +57,7 @@ export class NextButton {
   }
 
   private onClick = () => {
-    console.log("BUTTON>>CLICK__NEXT");
+    console.log('BUTTON>>CLICK__NEXT');
     if (this.isHighlight) {
       if (this.action) {
         this.action();

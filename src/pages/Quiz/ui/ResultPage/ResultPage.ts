@@ -1,21 +1,21 @@
-import { BaseComponent, useRouter } from "Core";
-import { utils } from "@/shared/Utils";
+import { BaseComponent, useRouter } from 'Core';
+import { utils } from '@/shared/Utils';
 
-import { BirdsStore } from "@/entities/Birds";
-import { AudioPlayer } from "@/features/AudioPlayer";
+import { BirdsStore } from '@/entities/Birds';
+import { AudioPlayer } from '@/features/AudioPlayer';
 
-import ROCK_PRIVET_AUDIO from "@/shared/assets/audio/rock-privet.mp3";
+import ROCK_PRIVET_AUDIO from '@/shared/assets/audio/rock-privet.mp3';
 
-import "./style.scss";
+import './style.scss';
 
-const TEXT_BTN = "Повторить";
-const TEXT_LOSE = "Мало очков, что бы получить приз нужно минимум 15 очков.";
+const TEXT_BTN = 'Повторить';
+const TEXT_LOSE = 'Мало очков, что бы получить приз нужно минимум 15 очков.';
 
 function wrapperScore() {
-  const wrapperScore = utils.createHTMLElement("div", "result__score");
-  const textScore = utils.createHTMLElement("span", "font-size-24");
-  textScore.textContent = "Score: ";
-  const resultScore = utils.createHTMLElement("span", "font-size-24");
+  const wrapperScore = utils.createHTMLElement('div', 'result__score');
+  const textScore = utils.createHTMLElement('span', 'font-size-24');
+  textScore.textContent = 'Score: ';
+  const resultScore = utils.createHTMLElement('span', 'font-size-24');
   wrapperScore.append(textScore, resultScore);
 
   return {
@@ -25,16 +25,16 @@ function wrapperScore() {
 }
 
 function view() {
-  const root = utils.createHTMLElement("section", "result");
+  const root = utils.createHTMLElement('section', 'result');
 
   const ws = wrapperScore();
 
-  const wrapper = utils.createHTMLElement("div", "result__content");
-  const text = utils.createHTMLElement("p", "font-size-24");
-  const prize = utils.createHTMLElement("div");
+  const wrapper = utils.createHTMLElement('div', 'result__content');
+  const text = utils.createHTMLElement('p', 'font-size-24');
+  const prize = utils.createHTMLElement('div');
   const btn = utils.createHTMLElement(
-    "button",
-    "btn btn-accent color-black font-size-28"
+    'button',
+    'btn btn-accent color-black font-size-28',
   );
   btn.textContent = TEXT_BTN;
   wrapper.append(text, btn);
@@ -81,12 +81,12 @@ class ResultPage extends BaseComponent {
 
   public OnMount(): void {
     this.audioPlayer.OnMount();
-    this.view.btn.addEventListener("click", this.onClick);
+    this.view.btn.addEventListener('click', this.onClick);
   }
 
   public OnUnMount(): void {
     this.audioPlayer.OnUnMount();
-    this.view.btn.removeEventListener("click", this.onClick);
+    this.view.btn.removeEventListener('click', this.onClick);
   }
 
   public Render(): HTMLElement {
@@ -95,7 +95,7 @@ class ResultPage extends BaseComponent {
 
   private onClick = () => {
     this.store.Reset();
-    useRouter("quiz");
+    useRouter('quiz');
   };
 }
 

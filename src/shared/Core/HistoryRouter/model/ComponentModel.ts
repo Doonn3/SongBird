@@ -1,5 +1,5 @@
-import { BaseComponent } from "../../BaseComponent/BaseComponent";
-import { IRoute } from "../Types/Types";
+import { BaseComponent } from '../../BaseComponent/BaseComponent';
+import { IRoute } from '../Types/Types';
 
 export class ComponentModel {
   private currComponent: BaseComponent | null = null;
@@ -12,7 +12,7 @@ export class ComponentModel {
 
   private unmountCurrComponent() {
     if (this.currComponent) {
-      console.log("<<UNMOUNT :: COMPONENT>>", this.currComponent);
+      console.log('<<UNMOUNT :: COMPONENT>>', this.currComponent);
       this.currComponent.OnUnMount();
       this.currComponent = null;
     }
@@ -21,7 +21,7 @@ export class ComponentModel {
   private updateCurrComponent(curr: IRoute | null) {
     if (curr && curr.component) {
       this.currComponent = new curr.component();
-      console.log("<<MOUNT :: COMPONENT>>", this.currComponent);
+      console.log('<<MOUNT :: COMPONENT>>', this.currComponent);
       this.currComponent.Init();
       this.currComponent.OnMount();
     }

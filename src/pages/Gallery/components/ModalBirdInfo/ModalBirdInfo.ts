@@ -1,8 +1,8 @@
-import { ModalDialog, ModalPropsType } from "@/shared/ui/ModalDialog";
-import { AudioPlayer } from "@/features/AudioPlayer";
-import { utils } from "@/shared/Utils";
+import { ModalDialog, ModalPropsType } from '@/shared/ui/ModalDialog';
+import { AudioPlayer } from '@/features/AudioPlayer';
+import { utils } from '@/shared/Utils';
 
-import "./style.scss";
+import './style.scss';
 
 class View {
   private root: HTMLElement;
@@ -17,31 +17,31 @@ class View {
   }
 
   constructor(props: { urlSrc: string; slot: HTMLElement }) {
-    this.root = utils.createHTMLElement("div", "modal");
-    this.root.style.display = "none";
-    this.content = utils.createHTMLElement("div", "modal__content");
-    const contentLeft = utils.createHTMLElement("div", "modal__left");
+    this.root = utils.createHTMLElement('div', 'modal');
+    this.root.style.display = 'none';
+    this.content = utils.createHTMLElement('div', 'modal__content');
+    const contentLeft = utils.createHTMLElement('div', 'modal__left');
 
-    const div = utils.createHTMLElement("div");
-    this.img = utils.createHTMLElement("img") as HTMLImageElement;
+    const div = utils.createHTMLElement('div');
+    this.img = utils.createHTMLElement('img') as HTMLImageElement;
     this.img.src = props.urlSrc;
     div.append(this.img);
-    const wrapperAudio = utils.createHTMLElement("div");
+    const wrapperAudio = utils.createHTMLElement('div');
     wrapperAudio.append(props.slot);
 
     contentLeft.append(div, wrapperAudio);
 
-    const contentRight = utils.createHTMLElement("div", "modal__right");
+    const contentRight = utils.createHTMLElement('div', 'modal__right');
 
     const wrapper = utils.createHTMLElement(
-      "div",
-      "modal__content-right-wrapper"
+      'div',
+      'modal__content-right-wrapper',
     );
-    this.title = utils.createHTMLElement("span", "color-white font-size-36");
-    this.subtitle = utils.createHTMLElement("span", "color-white font-size-28");
+    this.title = utils.createHTMLElement('span', 'color-white font-size-36');
+    this.subtitle = utils.createHTMLElement('span', 'color-white font-size-28');
     wrapper.append(this.title, this.subtitle);
 
-    this.description = utils.createHTMLElement("p", "color-white font-size-24");
+    this.description = utils.createHTMLElement('p', 'color-white font-size-24');
     contentRight.append(wrapper, this.description);
 
     this.content.append(contentLeft, contentRight);
@@ -49,11 +49,11 @@ class View {
   }
 
   public Show() {
-    this.root.style.display = "grid";
+    this.root.style.display = 'grid';
   }
 
   public Hide() {
-    this.root.style.display = "none";
+    this.root.style.display = 'none';
   }
 
   public SetProps(props: PropsType) {
@@ -78,7 +78,7 @@ export class ModalBirdInfo {
   private actionView: ActionType;
 
   constructor(action: ActionType) {
-    this.view = new View({ urlSrc: "", slot: this.audioPlayer.Render() });
+    this.view = new View({ urlSrc: '', slot: this.audioPlayer.Render() });
     this.actionView = action;
   }
 
@@ -99,11 +99,11 @@ export class ModalBirdInfo {
   }
 
   public OnMount() {
-    this.view.Context.root.addEventListener("click", this.emitClose);
+    this.view.Context.root.addEventListener('click', this.emitClose);
   }
 
   public OnUnMount() {
-    this.view.Context.root.removeEventListener("click", this.emitClose);
+    this.view.Context.root.removeEventListener('click', this.emitClose);
   }
 
   private emitClose = (e: Event) => {

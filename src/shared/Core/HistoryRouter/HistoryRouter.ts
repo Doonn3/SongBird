@@ -1,7 +1,7 @@
-import { BaseComponent } from "..";
-import { RoutesType } from "./Types/Types";
-import { ComponentModel } from "./model/ComponentModel";
-import { RouterModel } from "./model/RouterModel";
+import { BaseComponent } from '..';
+import { RoutesType } from './Types/Types';
+import { ComponentModel } from './model/ComponentModel';
+import { RouterModel } from './model/RouterModel';
 
 interface EmitType {
   (mountComponent: BaseComponent): void;
@@ -24,13 +24,13 @@ export class HistoryRouter {
 
   public Init() {
     this.onURLChange();
-    window.addEventListener("popstate", () => {
+    window.addEventListener('popstate', () => {
       this.onURLChange();
     });
   }
 
   public LinkTo(to: string) {
-    this.browserHistory.pushState(null, "", to);
+    this.browserHistory.pushState(null, '', to);
     this.onURLChange();
   }
 

@@ -1,15 +1,15 @@
-import { utils } from "@/shared/Utils";
+import { utils } from '@/shared/Utils';
 
-import AudioPlayerModel from "../../model/AudioPlayerModel";
-import { ProgressBarViewModel } from "./ProgressBarViewModel";
+import AudioPlayerModel from '../../model/AudioPlayerModel';
+import { ProgressBarViewModel } from './ProgressBarViewModel';
 
-import "./style.scss";
+import './style.scss';
 
 function progressBarInfo() {
-  const root = utils.createHTMLElement("div", "progress-bar__info");
-  const time = utils.createHTMLElement("div", "progress-bar__time");
-  time.textContent = "0";
-  const maxDuration = utils.createHTMLElement("div", "progress-bar__max-time");
+  const root = utils.createHTMLElement('div', 'progress-bar__info');
+  const time = utils.createHTMLElement('div', 'progress-bar__time');
+  time.textContent = '0';
+  const maxDuration = utils.createHTMLElement('div', 'progress-bar__max-time');
   root.append(time, maxDuration);
 
   return {
@@ -20,9 +20,9 @@ function progressBarInfo() {
 }
 
 function progressBar() {
-  const root = utils.createHTMLElement("div", "progress-bar");
-  const track = utils.createHTMLElement("div", "progress-bar__track");
-  const fill = utils.createHTMLElement("span", "progress-bar__fill");
+  const root = utils.createHTMLElement('div', 'progress-bar');
+  const track = utils.createHTMLElement('div', 'progress-bar__track');
+  const fill = utils.createHTMLElement('span', 'progress-bar__fill');
   track.append(fill);
   root.append(track);
 
@@ -42,8 +42,8 @@ export class ProgressBarControls {
   constructor(audioModel: AudioPlayerModel) {
     this.vm = new ProgressBarViewModel(audioModel, this);
 
-    const barInfo = document.createElement("div");
-    barInfo.classList.add("progress-bar__info");
+    const barInfo = document.createElement('div');
+    barInfo.classList.add('progress-bar__info');
 
     const convert = this.vm.ProgressBarModel.ConvertSecondsToFormatMinSecond(0);
 
@@ -53,11 +53,11 @@ export class ProgressBarControls {
   }
 
   public OnMount() {
-    this.progressBarContext.root.addEventListener("click", this.onChange);
+    this.progressBarContext.root.addEventListener('click', this.onChange);
   }
 
   public OnUnmount() {
-    this.progressBarContext.root.removeEventListener("click", this.onChange);
+    this.progressBarContext.root.removeEventListener('click', this.onChange);
   }
 
   private onChange = (event: MouseEvent) => {

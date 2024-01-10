@@ -1,3 +1,3 @@
-import AudioPlayer from "./ui/AudioPlayer";
+import AudioPlayer from './ui/AudioPlayer';
 
 export { AudioPlayer };

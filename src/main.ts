@@ -1,8 +1,8 @@
-import "./app/style/app.style.scss";
+import './app/style/app.style.scss';
 
-import { App } from "@/app/App";
+import { App } from '@/app/App';
 
-const elemApp = document.querySelector<HTMLElement>("#app");
+const elemApp = document.querySelector<HTMLElement>('#app');
 
 if (elemApp) {
   const app = new App(elemApp);

@@ -1,1 +1,1 @@
-export { ModalBirdInfo } from "./ModalBirdInfo";
+export { ModalBirdInfo } from './ModalBirdInfo';

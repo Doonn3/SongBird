@@ -1,13 +1,13 @@
-import { BirdType, BirdsStore } from "@/entities/Birds";
+import { BirdType, BirdsStore } from '@/entities/Birds';
 
-import { BirdDescription } from "../components/BirdDescription/BirdDescription";
+import { BirdDescription } from '../components/BirdDescription/BirdDescription';
 
-import { ICommand } from "./ICommand";
+import { ICommand } from './ICommand';
 
-import { CurrentQuestion } from "../components/CurrentQuestion/CurrentQuestion";
-import { ListQuestion } from "../components/ListQuestion/ListQuestion";
-import { AnswerOptions } from "../components/AnswerOptions/AnswerOptions";
-import { NextButton } from "../components/NextButton/NextButton";
+import { CurrentQuestion } from '../components/CurrentQuestion/CurrentQuestion';
+import { ListQuestion } from '../components/ListQuestion/ListQuestion';
+import { AnswerOptions } from '../components/AnswerOptions/AnswerOptions';
+import { NextButton } from '../components/NextButton/NextButton';
 
 type PropsType = {
   birdDescription: BirdDescription;
@@ -29,20 +29,20 @@ export class AnswerDetailsCommand implements ICommand<BirdType> {
     this.props.listQuestion.SetQuestions(this.props.store.GetLevelList());
 
     this.props.store.Sub({
-      id: "AnswerDetailsCommand",
-      type: "event-get-score",
+      id: 'AnswerDetailsCommand',
+      type: 'event-get-score',
       call: this.handlerScore,
     });
 
     this.props.store.Sub({
-      id: "AnswerDetailsCommand",
-      type: "event-correct-answer",
+      id: 'AnswerDetailsCommand',
+      type: 'event-correct-answer',
       call: this.handlerCorrectAnswer,
     });
 
     this.props.store.Sub({
-      id: "AnswerDetailsCommand",
-      type: "event-details-answer",
+      id: 'AnswerDetailsCommand',
+      type: 'event-details-answer',
       call: this.Execute.bind(this),
     });
 
@@ -53,20 +53,20 @@ export class AnswerDetailsCommand implements ICommand<BirdType> {
 
   public OnUnmount() {
     this.props.store.UnSub({
-      id: "AnswerDetailsCommand",
-      type: "event-get-score",
+      id: 'AnswerDetailsCommand',
+      type: 'event-get-score',
       call: this.handlerScore,
     });
 
     this.props.store.UnSub({
-      id: "AnswerDetailsCommand",
-      type: "event-correct-answer",
+      id: 'AnswerDetailsCommand',
+      type: 'event-correct-answer',
       call: this.handlerCorrectAnswer,
     });
 
     this.props.store.UnSub({
-      id: "AnswerDetailsCommand",
-      type: "event-details-answer",
+      id: 'AnswerDetailsCommand',
+      type: 'event-details-answer',
       call: this.Execute.bind(this),
     });
   }
@@ -94,7 +94,7 @@ export class AnswerDetailsCommand implements ICommand<BirdType> {
   };
 
   private handlerScore = (score: number) => {
-    console.log(score, "SCORE");
+    console.log(score, 'SCORE');
     this.props.listQuestion.SetScore(score);
   };
 

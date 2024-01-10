@@ -1,4 +1,4 @@
-import "./style.scss";
+import './style.scss';
 
 export type PropsType = {
   title: string;
@@ -10,10 +10,10 @@ export type PropsType = {
 class ModalDialog {
   private root!: HTMLDialogElement;
   private props: PropsType = {
-    title: "Default Title",
-    subTitle: "Default Subtitle",
-    description: "Default Description",
-    urlSrc: "",
+    title: 'Default Title',
+    subTitle: 'Default Subtitle',
+    description: 'Default Description',
+    urlSrc: '',
   };
   private slot?: HTMLElement;
 
@@ -24,33 +24,33 @@ class ModalDialog {
       this.props = _props;
     }
     this.slot = slot;
-    this.root = document.createElement("dialog");
-    this.root.classList.add("modal-dialog");
+    this.root = document.createElement('dialog');
+    this.root.classList.add('modal-dialog');
     this.onInit();
   }
 
   private onInit() {
-    const content = document.createElement("div");
-    content.classList.add(...["content", "modal-dialog__content"]);
+    const content = document.createElement('div');
+    content.classList.add(...['content', 'modal-dialog__content']);
 
-    const leftContent = document.createElement("div");
-    leftContent.classList.add("content__left");
-    const title = document.createElement("span");
+    const leftContent = document.createElement('div');
+    leftContent.classList.add('content__left');
+    const title = document.createElement('span');
     title.textContent = this.props.title;
-    const subTitle = document.createElement("span");
+    const subTitle = document.createElement('span');
     subTitle.textContent = this.props.subTitle;
-    const description = document.createElement("p");
+    const description = document.createElement('p');
     description.textContent = this.props.description;
 
     leftContent.append(title, subTitle, description);
 
-    const rightContent = document.createElement("div");
-    rightContent.classList.add("content__right");
-    const img = document.createElement("img");
+    const rightContent = document.createElement('div');
+    rightContent.classList.add('content__right');
+    const img = document.createElement('img');
     img.src = this.props.urlSrc;
 
-    const slotWraper = document.createElement("div");
-    slotWraper.append(this.slot ? this.slot : "");
+    const slotWraper = document.createElement('div');
+    slotWraper.append(this.slot ? this.slot : '');
     rightContent.append(img, slotWraper);
 
     content.append(leftContent, rightContent);
@@ -59,11 +59,11 @@ class ModalDialog {
   }
 
   public OnMount() {
-    this.root.addEventListener("click", this.onClose);
+    this.root.addEventListener('click', this.onClose);
   }
 
   public OnUnmount() {
-    this.root.removeEventListener("click", this.onClose);
+    this.root.removeEventListener('click', this.onClose);
   }
 
   private onClose = (event: Event) => {
@@ -77,7 +77,7 @@ class ModalDialog {
 
   public SetProps(props: PropsType) {
     this.props = props;
-    this.root.innerHTML = "";
+    this.root.innerHTML = '';
     this.onInit();
   }
 

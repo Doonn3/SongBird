@@ -1,9 +1,9 @@
-import "./style.scss";
-import SoundMuteIcon from "../../assets/sound-mute.svg";
-import SoundMinIcon from "../../assets/sound-min.svg";
-import SoundMaxIcon from "../../assets/sound-max.svg";
-import { utils } from "@/shared/Utils";
-import AudioPlayerModel from "../../model/AudioPlayerModel";
+import './style.scss';
+import SoundMuteIcon from '../../assets/sound-mute.svg';
+import SoundMinIcon from '../../assets/sound-min.svg';
+import SoundMaxIcon from '../../assets/sound-max.svg';
+import { utils } from '@/shared/Utils';
+import AudioPlayerModel from '../../model/AudioPlayerModel';
 
 class SoundModel {
   private audioPlayerModel: AudioPlayerModel;
@@ -89,19 +89,19 @@ export class SoundControls {
   constructor(audioPlayerModel: AudioPlayerModel) {
     this.model = new SoundModel(audioPlayerModel);
 
-    this.root = utils.createHTMLElement("div", "sound-controls");
+    this.root = utils.createHTMLElement('div', 'sound-controls');
 
-    this.iconControl = utils.createHTMLElement("div", "sound-controls__icons");
+    this.iconControl = utils.createHTMLElement('div', 'sound-controls__icons');
     this.iconControl.innerHTML = this.model.CurrentStatusIcon;
 
     this.track = utils.createHTMLElement(
-      "div",
-      "sound-controls__progress-track"
+      'div',
+      'sound-controls__progress-track',
     );
 
     this.fill = utils.createHTMLElement(
-      "span",
-      "sound-controls__progress-fill"
+      'span',
+      'sound-controls__progress-fill',
     );
 
     this.fill.style.width = `${this.model.CurrentPowerSound}%`;
@@ -112,13 +112,13 @@ export class SoundControls {
   }
 
   public OnMount() {
-    this.iconControl.addEventListener("click", this.onChangeIconControls);
-    this.track.addEventListener("click", this.onChangeSound);
+    this.iconControl.addEventListener('click', this.onChangeIconControls);
+    this.track.addEventListener('click', this.onChangeSound);
   }
 
   public OnUnMount() {
-    this.iconControl.removeEventListener("click", this.onChangeIconControls);
-    this.track.removeEventListener("click", this.onChangeSound);
+    this.iconControl.removeEventListener('click', this.onChangeIconControls);
+    this.track.removeEventListener('click', this.onChangeSound);
   }
 
   public Render() {

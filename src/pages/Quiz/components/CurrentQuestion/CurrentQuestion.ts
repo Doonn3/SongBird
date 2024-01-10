@@ -1,7 +1,7 @@
-import { AudioPlayer } from "@/features/AudioPlayer";
-import BirdMaskImg from "../../assets/bird-mask.jpg";
+import { AudioPlayer } from '@/features/AudioPlayer';
+import BirdMaskImg from '../../assets/bird-mask.jpg';
 
-import "./style.scss";
+import './style.scss';
 
 export class CurrentQuestion {
   private root: HTMLElement;
@@ -12,17 +12,17 @@ export class CurrentQuestion {
   private audioPlayer = new AudioPlayer();
 
   constructor() {
-    this.root = document.createElement("div");
-    this.root.classList.add("current-question");
+    this.root = document.createElement('div');
+    this.root.classList.add('current-question');
 
-    this.img = document.createElement("img");
+    this.img = document.createElement('img');
     this.img.src = BirdMaskImg;
 
-    const container = document.createElement("div");
+    const container = document.createElement('div');
 
-    this.title = document.createElement("p");
-    this.title.classList.add("font-size-32", "color-white");
-    this.title.textContent = "*******";
+    this.title = document.createElement('p');
+    this.title.classList.add('font-size-32', 'color-white');
+    this.title.textContent = '*******';
 
     container.append(this.title, this.audioPlayer.Render());
 
@@ -52,7 +52,7 @@ export class CurrentQuestion {
 
   public Default() {
     this.img.src = BirdMaskImg;
-    this.title.textContent = "*******";
+    this.title.textContent = '*******';
   }
 
   public Render() {

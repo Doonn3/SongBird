@@ -1,5 +1,5 @@
-import { BaseComponent, HistoryRouter } from "Core";
-import { routs } from "./routs/routs";
+import { BaseComponent, HistoryRouter } from 'Core';
+import { routs } from './routs/routs';
 
 export class App {
   private router = new HistoryRouter(routs);
@@ -12,7 +12,7 @@ export class App {
   }
 
   private onRender = (component: BaseComponent) => {
-    this.root.innerHTML = "";
+    this.root.innerHTML = '';
 
     this.root.append(component.Render());
   };

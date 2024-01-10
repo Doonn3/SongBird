@@ -1,16 +1,16 @@
-import PlayIcon from "../../assets/play.svg";
-import PauseIcon from "../../assets/pause.svg";
-import StopIcon from "../../assets/stop.svg";
+import PlayIcon from '../../assets/play.svg';
+import PauseIcon from '../../assets/pause.svg';
+import StopIcon from '../../assets/stop.svg';
 
-import "./style.scss";
-import { utils } from "@/shared/Utils";
-import AudioPlayerModel from "../../model/AudioPlayerModel";
-import { Model } from "./Model";
+import './style.scss';
+import { utils } from '@/shared/Utils';
+import AudioPlayerModel from '../../model/AudioPlayerModel';
+import { Model } from './Model';
 
 function controls() {
-  const root = utils.createHTMLElement("div", "play-pause-stop-controls");
-  const playPause = utils.createHTMLElement("div", "play-pause-wraper");
-  const stop = utils.createHTMLElement("div", "stop-wraper");
+  const root = utils.createHTMLElement('div', 'play-pause-stop-controls');
+  const playPause = utils.createHTMLElement('div', 'play-pause-wraper');
+  const stop = utils.createHTMLElement('div', 'stop-wraper');
   root.append(playPause, stop);
   return {
     root,
@@ -27,22 +27,22 @@ class PlayPauseStopControls {
     this.model = new Model(audioPlayer, this);
 
     this.controls.playPause.insertAdjacentHTML(
-      "beforeend",
-      this.model.IsPlay ? PauseIcon : PlayIcon
+      'beforeend',
+      this.model.IsPlay ? PauseIcon : PlayIcon,
     );
 
-    this.controls.stop.insertAdjacentHTML("beforeend", StopIcon);
+    this.controls.stop.insertAdjacentHTML('beforeend', StopIcon);
   }
 
   public OnMount = () => {
-    this.controls.playPause.addEventListener("click", this.onTogglePlay);
-    this.controls.stop.addEventListener("click", this.onStop);
+    this.controls.playPause.addEventListener('click', this.onTogglePlay);
+    this.controls.stop.addEventListener('click', this.onStop);
   };
 
   public OnUnmount = () => {
     this.onStop();
-    this.controls.playPause.removeEventListener("click", this.onTogglePlay);
-    this.controls.stop.removeEventListener("click", this.onStop);
+    this.controls.playPause.removeEventListener('click', this.onTogglePlay);
+    this.controls.stop.removeEventListener('click', this.onStop);
   };
 
   private onTogglePlay = () => {

@@ -1,11 +1,11 @@
-import { utils } from "@/shared/Utils";
+import { utils } from '@/shared/Utils';
 
-import "./style.scss";
+import './style.scss';
 
-const STYLE_CARD = "card";
-const STYLE_IMG = "card__img";
-const STYLE_WRAPPER_TITLE = "card__wrapper-title";
-const STYLE_TITLE = "font-size-40 color-white";
+const STYLE_CARD = 'card';
+const STYLE_IMG = 'card__img';
+const STYLE_WRAPPER_TITLE = 'card__wrapper-title';
+const STYLE_TITLE = 'font-size-40 color-white';
 
 type PropsType = {
   title: string;
@@ -26,12 +26,12 @@ export class GalleryCard {
     this.props = props;
     this.action = action;
 
-    this.root = utils.createHTMLElement("div", STYLE_CARD);
-    const img = utils.createHTMLElement("img", STYLE_IMG) as HTMLImageElement;
+    this.root = utils.createHTMLElement('div', STYLE_CARD);
+    const img = utils.createHTMLElement('img', STYLE_IMG) as HTMLImageElement;
     img.src = this.props.urlImg;
 
-    const titleWrapper = utils.createHTMLElement("div", STYLE_WRAPPER_TITLE);
-    const title = utils.createHTMLElement("span", STYLE_TITLE);
+    const titleWrapper = utils.createHTMLElement('div', STYLE_WRAPPER_TITLE);
+    const title = utils.createHTMLElement('span', STYLE_TITLE);
     title.textContent = this.props.title;
     titleWrapper.append(title);
 
@@ -43,11 +43,11 @@ export class GalleryCard {
   };
 
   public OnMount() {
-    this.root.addEventListener("click", this.onClick);
+    this.root.addEventListener('click', this.onClick);
   }
 
   public OnUnMount() {
-    this.root.removeEventListener("click", this.onClick);
+    this.root.removeEventListener('click', this.onClick);
   }
 
   public Render() {

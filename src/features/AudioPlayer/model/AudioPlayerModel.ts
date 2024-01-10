@@ -1,5 +1,5 @@
-import { AudioModel } from "./AudioModel";
-import { SoundModel } from "./SoundModel";
+import { AudioModel } from './AudioModel';
+import { SoundModel } from './SoundModel';
 
 class AudioPlayerModel {
   private instanceAudio = new Audio();
@@ -8,7 +8,7 @@ class AudioPlayerModel {
 
   private durationCallback: (duration: number) => void = () => {};
   private currTimeCallback: (currentTime: number) => void = () => {};
-  private defaultState: () => void =  () => {};
+  private defaultState: () => void = () => {};
   private endedCallback: () => void = () => {};
 
   public get Audio() {
@@ -25,20 +25,20 @@ class AudioPlayerModel {
   }
 
   private mount() {
-    this.instanceAudio.addEventListener("loadedmetadata", this.eventDuration);
-    this.instanceAudio.addEventListener("timeupdate", this.eventCurrentTime);
-    this.instanceAudio.addEventListener("ended", this.eventEnded);
+    this.instanceAudio.addEventListener('loadedmetadata', this.eventDuration);
+    this.instanceAudio.addEventListener('timeupdate', this.eventCurrentTime);
+    this.instanceAudio.addEventListener('ended', this.eventEnded);
   }
 
   private unMount() {
     this.audioModel.Stop();
-    this.instanceAudio.src = "";
+    this.instanceAudio.src = '';
     this.instanceAudio.removeEventListener(
-      "loadedmetadata",
-      this.eventDuration
+      'loadedmetadata',
+      this.eventDuration,
     );
-    this.instanceAudio.removeEventListener("timeupdate", this.eventCurrentTime);
-    this.instanceAudio.removeEventListener("ended", this.eventEnded);
+    this.instanceAudio.removeEventListener('timeupdate', this.eventCurrentTime);
+    this.instanceAudio.removeEventListener('ended', this.eventEnded);
   }
 
   public Destroy() {
@@ -75,7 +75,7 @@ class AudioPlayerModel {
 
   private eventEnded = () => {
     console.log(
-      'this.instanceAudio.addEventListener("playing", this.eventPlaying);'
+      'this.instanceAudio.addEventListener("playing", this.eventPlaying);',
     );
     this.endedCallback();
   };

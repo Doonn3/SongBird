@@ -1,1 +1,1 @@
-export { GalleryCard } from "./GalleryCard";
+export { GalleryCard } from './GalleryCard';

@@ -1,5 +1,5 @@
-import AudioPlayerModel from "../../model/AudioPlayerModel";
-import PlayPauseStopControls from "./PlayPauseStopControls";
+import AudioPlayerModel from '../../model/AudioPlayerModel';
+import PlayPauseStopControls from './PlayPauseStopControls';
 
 export class Model {
   private audioPlayer: AudioPlayerModel;

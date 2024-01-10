@@ -1,4 +1,4 @@
-import "./style.scss";
+import './style.scss';
 
 type PropsType = {
   slots: HTMLElement[];
@@ -6,8 +6,8 @@ type PropsType = {
 
 export function LayoutGrid(props: PropsType) {
   const render = (): HTMLElement => {
-    const root = document.createElement("div");
-    root.classList.add("layout-grid");
+    const root = document.createElement('div');
+    root.classList.add('layout-grid');
     root.append(...props.slots);
     return root;
   };

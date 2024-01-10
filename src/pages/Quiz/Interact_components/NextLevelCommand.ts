@@ -1,13 +1,13 @@
-import { BirdsStore, EmitPropsType } from "@/entities/Birds";
+import { BirdsStore, EmitPropsType } from '@/entities/Birds';
 
-import { ICommand } from "./ICommand";
-import { ListQuestion } from "../components/ListQuestion/ListQuestion";
-import { AnswerOptions } from "../components/AnswerOptions/AnswerOptions";
-import { CurrentQuestion } from "../components/CurrentQuestion/CurrentQuestion";
-import { NextButton } from "../components/NextButton/NextButton";
-import { BirdDescription } from "../components/BirdDescription/BirdDescription";
+import { ICommand } from './ICommand';
+import { ListQuestion } from '../components/ListQuestion/ListQuestion';
+import { AnswerOptions } from '../components/AnswerOptions/AnswerOptions';
+import { CurrentQuestion } from '../components/CurrentQuestion/CurrentQuestion';
+import { NextButton } from '../components/NextButton/NextButton';
+import { BirdDescription } from '../components/BirdDescription/BirdDescription';
 
-import { useRouter } from "@/shared/Core";
+import { useRouter } from '@/shared/Core';
 
 type PropsType = {
   listQuestion: ListQuestion;
@@ -27,14 +27,14 @@ export class NextLevelCommand implements ICommand<EmitPropsType> {
 
   public OnMount() {
     this.props.store.Sub({
-      id: "QuizPage",
-      type: "event-start-level",
+      id: 'QuizPage',
+      type: 'event-start-level',
       call: this.Execute.bind(this),
     });
 
     this.props.store.Sub({
-      id: "NextLevelCommand",
-      type: "event-end-level",
+      id: 'NextLevelCommand',
+      type: 'event-end-level',
       call: this.handlerEndLevel,
     });
     this.props.nextLevelBtn.SetAction(this.onClickNextLevelBtn);
@@ -42,14 +42,14 @@ export class NextLevelCommand implements ICommand<EmitPropsType> {
 
   public OnUnmount() {
     this.props.store.UnSub({
-      id: "QuizPage",
-      type: "event-start-level",
+      id: 'QuizPage',
+      type: 'event-start-level',
       call: this.Execute.bind(this),
     });
 
     this.props.store.UnSub({
-      id: "NextLevelCommand",
-      type: "event-end-level",
+      id: 'NextLevelCommand',
+      type: 'event-end-level',
       call: this.handlerEndLevel,
     });
   }
@@ -58,7 +58,7 @@ export class NextLevelCommand implements ICommand<EmitPropsType> {
     this.props.listQuestion.SelectItem(this.props.store.CurrentLevel());
 
     this.props.answerOptions.CreateItems(
-      data.birdsChoise.map((bird) => bird.name)
+      data.birdsChoise.map((bird) => bird.name),
     );
 
     if (data.birdAnswer) {
@@ -68,12 +68,12 @@ export class NextLevelCommand implements ICommand<EmitPropsType> {
   }
 
   private handlerEndLevel = () => {
-    this.props.nextLevelBtn.SetText("Посмотреть Результат");
+    this.props.nextLevelBtn.SetText('Посмотреть Результат');
     this.props.nextLevelBtn.SetAction(this.onClickNextLevelBtnResult);
   };
 
   private onClickNextLevelBtn = () => {
-    console.log("CLICK Next Level");
+    console.log('CLICK Next Level');
     this.props.currentQuestion.OnUnMount();
     this.props.currentQuestion.OnMount();
 
@@ -83,6 +83,6 @@ export class NextLevelCommand implements ICommand<EmitPropsType> {
   };
 
   private onClickNextLevelBtnResult = () => {
-    useRouter("quiz-result");
+    useRouter('quiz-result');
   };
 }

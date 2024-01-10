@@ -1,4 +1,4 @@
-import { RoutesType } from "../Types/Types";
+import { RoutesType } from '../Types/Types';
 
 export class RouterModel {
   private readonly routes: RoutesType;
@@ -16,7 +16,7 @@ export class RouterModel {
   private findRoute(urlPath: string, routes: RoutesType) {
     const route =
       routes.find((route) => route.path === urlPath) ||
-      routes.find((route) => route.path === "*");
+      routes.find((route) => route.path === '*');
 
     console.log(route);
     return route ? route : null;

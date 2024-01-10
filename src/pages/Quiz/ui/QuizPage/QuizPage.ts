@@ -1,19 +1,19 @@
-import { BaseComponent } from "Core";
+import { BaseComponent } from 'Core';
 
-import { BirdsStore } from "@/entities/Birds";
+import { BirdsStore } from '@/entities/Birds';
 
-import { ListQuestion } from "../../components/ListQuestion/ListQuestion";
-import { CurrentQuestion } from "../../components/CurrentQuestion/CurrentQuestion";
-import { AnswerOptions } from "../../components/AnswerOptions/AnswerOptions";
-import { BirdDescription } from "../../components/BirdDescription/BirdDescription";
-import { NextButton } from "../../components/NextButton/NextButton";
+import { ListQuestion } from '../../components/ListQuestion/ListQuestion';
+import { CurrentQuestion } from '../../components/CurrentQuestion/CurrentQuestion';
+import { AnswerOptions } from '../../components/AnswerOptions/AnswerOptions';
+import { BirdDescription } from '../../components/BirdDescription/BirdDescription';
+import { NextButton } from '../../components/NextButton/NextButton';
 
 import {
   NextLevelCommand,
   AnswerDetailsCommand,
-} from "../../Interact_components";
+} from '../../Interact_components';
 
-import "./style.scss";
+import './style.scss';
 
 class QuizPage extends BaseComponent {
   private store = BirdsStore.Instance;
@@ -33,11 +33,11 @@ class QuizPage extends BaseComponent {
   constructor() {
     super();
 
-    this.root = document.createElement("section");
-    this.root.classList.add("quiz");
+    this.root = document.createElement('section');
+    this.root.classList.add('quiz');
 
-    const div = document.createElement("div");
-    div.classList.add("quiz__middle");
+    const div = document.createElement('div');
+    div.classList.add('quiz__middle');
 
     this.answerOptions = new AnswerOptions();
 
@@ -49,7 +49,7 @@ class QuizPage extends BaseComponent {
       this.listQuestion.Render(),
       this.currentQuestion.Render(),
       div,
-      this.nextBtn.Render()
+      this.nextBtn.Render(),
     );
 
     this.nextLevelCommand = new NextLevelCommand({
@@ -72,11 +72,11 @@ class QuizPage extends BaseComponent {
   }
 
   public Init() {
-    console.log("INIT", "<<QuizPage>>");
+    console.log('INIT', '<<QuizPage>>');
   }
 
   public OnMount() {
-    console.log("MOUNT", "<<QuizPage>>");
+    console.log('MOUNT', '<<QuizPage>>');
 
     this.answerOptions.OnMount();
     this.nextBtn.OnMount();

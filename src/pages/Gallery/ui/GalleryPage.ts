@@ -1,23 +1,23 @@
-import { BaseComponent } from "Core";
+import { BaseComponent } from 'Core';
 
-import { utils } from "@/shared/Utils";
+import { utils } from '@/shared/Utils';
 
-import { BirdsStore } from "@/entities/Birds";
-import { Header } from "@/widgets/Header";
+import { BirdsStore } from '@/entities/Birds';
+import { Header } from '@/widgets/Header';
 
-import { GalleryCard } from "../components/GalleryCard";
-import { ModalBirdInfo } from "../components/ModalBirdInfo";
+import { GalleryCard } from '../components/GalleryCard';
+import { ModalBirdInfo } from '../components/ModalBirdInfo';
 
-import "./style.scss";
+import './style.scss';
 
 function view() {
-  const root = utils.createHTMLElement("section", "gallery");
+  const root = utils.createHTMLElement('section', 'gallery');
 
-  const content = utils.createHTMLElement("section", "gallery__content");
+  const content = utils.createHTMLElement('section', 'gallery__content');
 
   const wrapperHeader = utils.createHTMLElement(
-    "div",
-    "gallery__wrapper-header"
+    'div',
+    'gallery__wrapper-header',
   );
 
   root.append(wrapperHeader, content);
@@ -30,7 +30,7 @@ function view() {
 
 export class GalleryPage extends BaseComponent {
   // private header = new Header("fixed top-10 z-index-2000");
-  private header = new Header("fixed top-5 z-index-2000");
+  private header = new Header('fixed top-5 z-index-2000');
 
   private modalInfo: ModalBirdInfo;
 
@@ -56,7 +56,7 @@ export class GalleryPage extends BaseComponent {
           title: bird.name,
           urlImg: bird.image,
         },
-        { onClickCard: this.onClickCard.bind(this) }
+        { onClickCard: this.onClickCard.bind(this) },
       );
     });
 
@@ -81,7 +81,7 @@ export class GalleryPage extends BaseComponent {
 
   public Init() {
     this.view.content.append(
-      ...this.createCards().map((card) => card.Render())
+      ...this.createCards().map((card) => card.Render()),
     );
     this.view.wrapperHeader.append(this.header.Render());
     this.view.root.append(this.modalInfo.Render());

@@ -1,11 +1,11 @@
-import AudioPlayerModel from "../model/AudioPlayerModel";
-import PlayPauseStopControls from "../components/PlayPauseControls/PlayPauseStopControls";
-import { ProgressBarControls } from "../components/ProgressBarControls/ProgressBarControls";
+import AudioPlayerModel from '../model/AudioPlayerModel';
+import PlayPauseStopControls from '../components/PlayPauseControls/PlayPauseStopControls';
+import { ProgressBarControls } from '../components/ProgressBarControls/ProgressBarControls';
 
-import { SoundControls } from "../components/SoundControls/SoundControls";
-import { utils } from "@/shared/Utils";
+import { SoundControls } from '../components/SoundControls/SoundControls';
+import { utils } from '@/shared/Utils';
 
-import "./style.scss";
+import './style.scss';
 
 class AudioPlayer {
   private root: HTMLElement;
@@ -24,13 +24,13 @@ class AudioPlayer {
 
     this.playPauseStopControls = new PlayPauseStopControls(this.model);
 
-    this.root = document.createElement("div");
-    this.root.classList.add("audio-player");
+    this.root = document.createElement('div');
+    this.root.classList.add('audio-player');
 
-    const div = utils.createHTMLElement("div", "audio-player__controls");
+    const div = utils.createHTMLElement('div', 'audio-player__controls');
     div.append(
       this.playPauseStopControls.Render(),
-      this.soundControls.Render()
+      this.soundControls.Render(),
     );
 
     this.root.append(div, this.progressBarControls.Render());

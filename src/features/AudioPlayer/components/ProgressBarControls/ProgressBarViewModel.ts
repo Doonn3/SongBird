@@ -1,6 +1,6 @@
-import AudioPlayerModel from "../../model/AudioPlayerModel";
-import { ProgressBarControls } from "./ProgressBarControls";
-import { ProgressBarModel } from "./ProgressBarModel";
+import AudioPlayerModel from '../../model/AudioPlayerModel';
+import { ProgressBarControls } from './ProgressBarControls';
+import { ProgressBarModel } from './ProgressBarModel';
 
 export class ProgressBarViewModel {
   private audioPlayerModel: AudioPlayerModel;
