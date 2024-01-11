@@ -66,7 +66,7 @@ export class GalleryPage extends BaseComponent {
   private onClickCard = (title: string) => {
     const bird = this.store.GetByName(title);
     if (bird === null) return;
-    const { id, name, species, description, image, audio } = bird;
+    const { name, species, description, image, audio } = bird;
 
     this.modalInfo.SetInfo({
       title: name,

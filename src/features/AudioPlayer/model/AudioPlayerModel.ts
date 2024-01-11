@@ -53,11 +53,11 @@ class AudioPlayerModel {
     this.mount();
   }
 
-  public onDurationChange(callback: (duration: number) => void) {
+  public onDurationChange(callback: () => void) {
     this.durationCallback = callback;
   }
 
-  public onCurrentChange(callback: (currentTime: number) => void) {
+  public onCurrentChange(callback: () => void) {
     this.currTimeCallback = callback;
   }
 

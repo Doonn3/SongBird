@@ -5,7 +5,7 @@ import { App } from '@/app/App';
 const elemApp = document.querySelector<HTMLElement>('#app');
 
 if (elemApp) {
-  const app = new App(elemApp);
+  new App(elemApp);
 }
 
 // TEST BLOCK

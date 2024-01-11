@@ -1,4 +1,4 @@
-import { ModalDialog, ModalPropsType } from '@/shared/ui/ModalDialog';
+import { ModalPropsType } from '@/shared/ui/ModalDialog';
 import { AudioPlayer } from '@/features/AudioPlayer';
 import { utils } from '@/shared/Utils';
 
