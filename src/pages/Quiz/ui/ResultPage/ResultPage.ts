@@ -2,9 +2,6 @@ import { BaseComponent, useRouter } from 'Core';
 import { utils } from '@/shared/Utils';
 
 import { BirdsStore } from '@/entities/Birds';
-import { AudioPlayer } from '@/features/AudioPlayer';
-
-import ROCK_PRIVET_AUDIO from '@/shared/assets/audio/rock-privet.mp3';
 
 import './style.scss';
 
@@ -54,13 +51,7 @@ function view() {
 class ResultPage extends BaseComponent {
   private view = view();
 
-  private audioPlayer = new AudioPlayer();
-
   private store = BirdsStore.Instance;
-
-  constructor() {
-    super();
-  }
 
   private checkScrore() {
     const score = this.store.GetScore();
@@ -70,8 +61,15 @@ class ResultPage extends BaseComponent {
       this.view.text.textContent = TEXT_LOSE;
     } else {
       this.view.text.remove();
-      this.view.wrapper.prepend(this.audioPlayer.Render());
-      this.audioPlayer.SetAudioSrc(ROCK_PRIVET_AUDIO);
+
+      const link = utils.createHTMLElement(
+        'a',
+        'font-size-24 color-accent hover:color-accent-cold',
+      ) as HTMLAnchorElement;
+      link.textContent = 'Rock Privet';
+      link.href = 'https://www.youtube.com/watch?v=NY8qKnaXe6k';
+      link.target = '_blank';
+      this.view.wrapper.prepend(link);
     }
   }
 
@@ -80,12 +78,10 @@ class ResultPage extends BaseComponent {
   }
 
   public OnMount(): void {
-    this.audioPlayer.OnMount();
     this.view.btn.addEventListener('click', this.onClick);
   }
 
   public OnUnMount(): void {
-    this.audioPlayer.OnUnMount();
     this.view.btn.removeEventListener('click', this.onClick);
   }
 

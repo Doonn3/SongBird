@@ -73,7 +73,6 @@ export class NextLevelCommand implements ICommand<EmitPropsType> {
   };
 
   private onClickNextLevelBtn = () => {
-    console.log('CLICK Next Level');
     this.props.currentQuestion.OnUnMount();
     this.props.currentQuestion.OnMount();
 

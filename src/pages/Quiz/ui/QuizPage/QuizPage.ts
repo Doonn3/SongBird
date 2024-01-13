@@ -71,13 +71,9 @@ class QuizPage extends BaseComponent {
     });
   }
 
-  public Init() {
-    console.log('INIT', '<<QuizPage>>');
-  }
+  public Init() {}
 
   public OnMount() {
-    console.log('MOUNT', '<<QuizPage>>');
-
     this.answerOptions.OnMount();
     this.nextBtn.OnMount();
     this.currentQuestion.OnMount();

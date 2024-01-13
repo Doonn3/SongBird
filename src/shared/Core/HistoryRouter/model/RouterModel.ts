@@ -18,7 +18,6 @@ export class RouterModel {
       routes.find((route) => route.path === urlPath) ||
       routes.find((route) => route.path === '*');
 
-    console.log(route);
     return route ? route : null;
   }
 }

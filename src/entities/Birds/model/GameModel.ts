@@ -69,8 +69,6 @@ export class GameModel {
   public GetRandomBirds(amount: number) {
     const flat = this.birds.flat();
 
-    console.log(flat);
-
     if (amount > flat.length) {
       amount = flat.length;
     }

@@ -18,7 +18,7 @@ class CanvasAudioPlayerView {
     canvas.style.height = '100px';
     canvas.width = 1024;
     canvas.height = 1024;
-    console.log(canvas.width, canvas.height);
+
     const ctx = canvas.getContext('2d');
     drawRect(ctx!, 30, 0, 100, 100);
 

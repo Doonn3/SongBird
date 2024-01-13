@@ -17,12 +17,10 @@ export class QuizMasterModel {
   public Set(data: BirdType[]) {
     this.choiceAnswers = this.mixing(data);
     this.tempChoiceAnswerIndex = [];
-    console.log('SEEEEEEEETTTTTTTTTTT');
 
     // Загадываеи ответ
     const randomIndex = Math.floor(Math.random() * this.choiceAnswers.length);
     this.currentQuestion = this.choiceAnswers[randomIndex];
-    console.log(this.currentQuestion);
   }
 
   public IsAnswerCorrect(index: number) {

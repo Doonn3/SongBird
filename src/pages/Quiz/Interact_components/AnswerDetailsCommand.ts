@@ -47,8 +47,6 @@ export class AnswerDetailsCommand implements ICommand<BirdType> {
     });
 
     this.props.answerOptions.SetEmit({ emit: this.onClickAnswerOption });
-
-    console.log(this.props);
   }
 
   public OnUnmount() {
@@ -73,7 +71,7 @@ export class AnswerDetailsCommand implements ICommand<BirdType> {
 
   Execute(data: BirdType): void {
     const { name, species, description, image, audio } = data;
-    console.log(this.props);
+
     this.props.birdDescription.SetInfo({
       title: name,
       subtitle: species,
@@ -94,7 +92,6 @@ export class AnswerDetailsCommand implements ICommand<BirdType> {
   };
 
   private handlerScore = (score: number) => {
-    console.log(score, 'SCORE');
     this.props.listQuestion.SetScore(score);
   };
 

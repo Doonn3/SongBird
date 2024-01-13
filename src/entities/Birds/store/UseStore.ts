@@ -24,7 +24,6 @@ export class BirdsStore extends EventSystem<Type> {
   private model = new GameModel(BirdsDataRu);
 
   public GetScore() {
-    console.log('GET SCORE  ', this.model.ScoreModel.CurrentScore);
     return this.model.ScoreModel.CurrentScore;
   }
 
@@ -67,7 +66,7 @@ export class BirdsStore extends EventSystem<Type> {
 
   public IsCorrectAnswer(index: number) {
     const result = this.model.IsAnswerCorrect(index);
-    console.log(result);
+
     this.Emit(
       'event-details-answer',
       this.model.QuizMasterModel.ChoiceAnswers[index],
@@ -81,7 +80,7 @@ export class BirdsStore extends EventSystem<Type> {
     }
 
     this.Emit('event-get-score', this.model.ScoreModel.CurrentScore);
-    console.log('GET SCORE  ', this.model.ScoreModel.CurrentScore);
+
     return result;
   }
 

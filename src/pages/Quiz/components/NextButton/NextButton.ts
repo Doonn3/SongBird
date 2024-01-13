@@ -57,7 +57,6 @@ export class NextButton {
   }
 
   private onClick = () => {
-    console.log('BUTTON>>CLICK__NEXT');
     if (this.isHighlight) {
       if (this.action) {
         this.action();

@@ -6,7 +6,8 @@ type TagType =
   | 'header'
   | 'nav'
   | 'p'
-  | 'button';
+  | 'button'
+  | 'a';
 
 export function createHTMLElement(tag: TagType, style?: string) {
   const elem = document.createElement(tag);

@@ -74,9 +74,6 @@ class AudioPlayerModel {
   };
 
   private eventEnded = () => {
-    console.log(
-      'this.instanceAudio.addEventListener("playing", this.eventPlaying);',
-    );
     this.endedCallback();
   };
 }
