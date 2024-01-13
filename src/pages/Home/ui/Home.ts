@@ -2,7 +2,7 @@ import { Header } from '@/widgets/Header';
 import { BaseComponent, Parallax3D } from 'Core';
 
 import IMG_LAYER_0 from '@/shared/assets/img/layer-0.jpg';
-import IMG_LAYER_1 from '@/shared/assets/img/layer-1.png';
+import IMG_LAYER_1 from '@/shared/assets/img/layer-1.webp';
 
 import './style.scss';
 
